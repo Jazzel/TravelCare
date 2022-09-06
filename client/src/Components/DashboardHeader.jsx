@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 import { logout } from "../actions/auth";
 
-const DashboardHeader = ({ auth: { user }, logout }) => {
+const DashboardHeader = ({ auth: { user, role }, logout }) => {
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow">
@@ -36,6 +36,13 @@ const DashboardHeader = ({ auth: { user }, logout }) => {
                 <li className="nav-item">
                   <a className="nav-link" href="#!">
                     LoggedIn User: <b>{user.name}</b>
+                  </a>
+                </li>
+              )}
+              {role && (
+                <li className="nav-item">
+                  <a className="nav-link" href="#!">
+                    Role: <b>{role}</b>
                   </a>
                 </li>
               )}

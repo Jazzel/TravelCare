@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { register, login } from "../actions/auth";
 import Alert from "../Components/Alert";
@@ -8,13 +8,18 @@ import { connect } from "react-redux";
 
 const Register = ({ register, isAuthenticated }) => {
   const [name, setName] = React.useState("");
+  const [role, setRole] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+
+  const dropdown = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    register({ name, email, password });
+    const role = dropdown.current.value || "user";
+
+    register({ name, email, password, role });
   };
   if (isAuthenticated) {
     return <Navigate to="/dashboard" />;
@@ -100,6 +105,20 @@ const Register = ({ register, isAuthenticated }) => {
                   onChange={(e) => setPassword(e.target.value)}
                   aria-label="Password"
                 />
+              </div>
+              <div className="input-group mb-3">
+                <span className="input-group-text" id="basic-addon1">
+                  {"&"}
+                </span>
+                <select
+                  className="form-control"
+                  value={role}
+                  ref={dropdown}
+                  onChange={(e) => setRole(e.target.value)}
+                >
+                  <option value="user">User</option>
+                  <option value="business">Business Owner</option>
+                </select>
               </div>
               <div className="text-center">
                 <button type="submit" className="btn btn-dark w-100">

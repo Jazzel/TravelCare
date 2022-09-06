@@ -21,6 +21,15 @@ const UserSchema = new Schema(
       required: true,
       default: "admin",
     },
+    status: {
+      type: String,
+      enum: ["Pending", "Active"],
+      default: "Pending",
+    },
+    confirmationCode: {
+      type: String,
+      unique: true,
+    },
   },
   { timestamps: true }
 );
