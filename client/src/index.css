@@ -21,6 +21,8 @@ code {
   align-items: center;
   background: url(assets/login-banner.webp);
   background-size: cover;
+  background-position: center;
+  background-color: #03729b;
   /* background-color: red; */
 }
 
@@ -52,4 +54,16 @@ code {
 
 .styled-font {
   font-family: "Pacifico", cursive;
+}
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.main-container {
+  transition: width 1.2s;
 }
