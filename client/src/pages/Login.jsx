@@ -97,7 +97,7 @@ const Login = ({ login, isAuthenticated }) => {
                   style={{
                     textDecoration: "none",
                   }}
-                  to="/register"
+                  to="/forgot-password"
                 >
                   Forgot Password
                 </Link>

@@ -28,7 +28,6 @@ const UserSchema = new Schema(
     },
     confirmationCode: {
       type: String,
-      unique: true,
     },
   },
   { timestamps: true }

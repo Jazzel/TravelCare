@@ -102,3 +102,50 @@ export const logout = () => (dispatch) => {
     type: LOGOUT,
   });
 };
+
+export const sendEmailForVerification =
+  ({ code, email }) =>
+  async (dispatch) => {
+    // send Email for verification
+  };
+
+export const verifyCode =
+  ({ code, email }) =>
+  async (dispatch) => {
+    if (code === "batman") {
+      dispatch({
+        type: "VERIFIED",
+        payload: true,
+      });
+
+      return true;
+    }
+  };
+
+export const changePassword =
+  ({ code, email, password }) =>
+  async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const body = JSON.stringify({ email, password, code });
+
+    try {
+      const res = await axios.post(
+        `${HOST}/api/change-password/`,
+        body,
+        config
+      );
+      console.log(res);
+      return res;
+    } catch (error) {
+      const errors = error.response.data.errors;
+
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+      }
+    }
+  };

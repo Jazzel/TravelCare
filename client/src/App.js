@@ -18,6 +18,9 @@ import { loadUser } from "./actions/auth";
 import { useEffect, useLayoutEffect } from "react";
 import PrivateRoute from "./routing/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
+import ForgotPassword from "./pages/ForgotPassword";
+import EmailCode from "./pages/EmailCode";
+import ChangePassword from "./pages/ChangePassword";
 
 export const HOST = "http://localhost:5000";
 
@@ -46,6 +49,12 @@ const App = () => {
               <Route path="contact" element={<Contact />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
+              <Route path="forgot-password" element={<ForgotPassword />} />
+              <Route path="auth-code/:email" element={<EmailCode />} />
+              <Route
+                path="change-password/:email/:code"
+                element={<ChangePassword />}
+              />
               <Route
                 path="dashboard"
                 element={

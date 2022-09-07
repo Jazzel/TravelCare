@@ -60,10 +60,12 @@ router.post(
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
       const token = jwt.sign({ email: req.body.email }, config.secret);
-      user.confirmationCode = token;
 
-      // await user.save();
-      console.log("dsad");
+      // TODO: fix
+      // user.confirmationCode = token;
+      user.confirmationCode = "batman";
+
+      await user.save();
 
       // sendConfirmationEmail(user.name, user.email, user.confirmationCode);
 
@@ -90,51 +92,28 @@ router.post(
         })
         .catch((err) => console.log(err));
 
-      if (user.status != "Active") {
-        return res.status(401).send({
-          message: "Pending Account. Please Verify Your Email!",
-        });
-      }
+      // if (user.status != "Active") {
+      //   return res.status(401).send({
+      //     message: "Pending Account. Please Verify Your Email!",
+      //   });
+      // }
 
-      // // Return JWT
-      // const payload = {
-      //   user: {
-      //     id: user.id,
-      //   },
-      // };
+      // Return JWT
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
 
-      // jwt.sign(payload, secretToken, { expiresIn: 360000 }, (err, token) => {
-      //   if (err) throw err;
-      //   return res.json({ token });
-      // });
+      jwt.sign(payload, secretToken, { expiresIn: 360000 }, (err, token) => {
+        if (err) throw err;
+        return res.json({ token });
+      });
     } catch (err) {
       console.error(err.message);
       return res.status(500).send("Server error");
     }
   }
 );
-
-// @route    POST api/users
-// @desc     Confirm User
-// @access   Public
-router.post("/:code", async (req, res) => {
-  User.findOne({
-    confirmationCode: req.params.code,
-  })
-    .then((user) => {
-      if (!user) {
-        return res.status(404).send({ message: "User Not found." });
-      }
-
-      user.status = "Active";
-      user.save((err) => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
-        }
-      });
-    })
-    .catch((e) => console.log("error", e));
-});
 
 module.exports = router;
