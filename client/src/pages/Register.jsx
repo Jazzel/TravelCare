@@ -38,7 +38,7 @@ const Register = ({ register, isAuthenticated }) => {
         >
           <div
             style={{
-              backgroundImage: `url(${require("./../assets/login-banner.webp")})`,
+              // backgroundImage: `url(${require("./../assets/login-banner.webp")})`,
               height: "200px",
               width: "100%",
               backgroundSize: "cover",
@@ -46,27 +46,28 @@ const Register = ({ register, isAuthenticated }) => {
               borderRadius: "5px",
             }}
           >
-            <div className="overlay">
+            <div className="overlay mt-4">
               <img
                 src={require("./../assets/logo.png")}
-                width="150px"
+                width="230px"
                 alt="logo"
               />
             </div>
           </div>
           <div className="p-4">
-            <h1 className="text-dark" style={{}}>
+            <h1 className="text-center mt-2 styled-font text-dark" style={{}}>
               Register
             </h1>
 
             <br />
-            <Alert style={{ width: "80%" }} />
             <form
-              autoComplete={false}
+              autoComplete="false"
               className="form m-auto"
               onSubmit={handleSubmit}
               style={{ width: "80%" }}
             >
+              <Alert style={{ width: "80%" }} />
+
               <div className="input-group mb-3">
                 <span className="input-group-text" id="basic-addon1">
                   ab
@@ -76,6 +77,7 @@ const Register = ({ register, isAuthenticated }) => {
                   className="form-control"
                   placeholder="Name"
                   value={name}
+                  autoComplete="false"
                   onChange={(e) => setName(e.target.value)}
                   aria-label="name"
                 />
@@ -88,6 +90,7 @@ const Register = ({ register, isAuthenticated }) => {
                   type="text"
                   className="form-control"
                   placeholder="Email"
+                  autoComplete="false"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   aria-label="email"

@@ -6,7 +6,9 @@ import {
   LOGOUT,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
+  UNVERIFIED,
   USER_LOADED,
+  VERIFIED,
 } from "../actions/types";
 
 const initialState = {
@@ -15,6 +17,7 @@ const initialState = {
   loading: true,
   user: null,
   role: null,
+  forgotCodeVerified: null,
 };
 
 export default function auth(state = initialState, action) {
@@ -48,6 +51,16 @@ export default function auth(state = initialState, action) {
         isAuthenticated: false,
         loading: false,
         token: null,
+      };
+    case VERIFIED:
+      return {
+        ...state,
+        forgotCodeVerified: true,
+      };
+    case UNVERIFIED:
+      return {
+        ...state,
+        forgotCodeVerified: false,
       };
     default:
       return state;

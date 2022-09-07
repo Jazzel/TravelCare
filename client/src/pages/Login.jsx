@@ -6,8 +6,8 @@ import PropTypes from "prop-types";
 import Alert from "../Components/Alert";
 
 const Login = ({ login, isAuthenticated }) => {
-  const [email, setEmail] = React.useState("jazzelmehmood4@gmail.com");
-  const [password, setPassword] = React.useState("Mpower1234");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ const Login = ({ login, isAuthenticated }) => {
         >
           <div
             style={{
-              backgroundImage: `url(${require("./../assets/login-banner.webp")})`,
+              // backgroundImage: `url(${require("./../assets/login-banner.webp")})`,
               height: "200px",
               width: "100%",
               backgroundSize: "cover",
@@ -40,26 +40,27 @@ const Login = ({ login, isAuthenticated }) => {
               borderRadius: "5px",
             }}
           >
-            <div className="overlay">
+            <div className="overlay mt-4">
               <img
                 src={require("./../assets/logo.png")}
-                width="150px"
+                width="230px"
                 alt="logo"
               />
             </div>
           </div>
 
           <div className="p-4">
-            <h1 className="text-dark" style={{}}>
+            <h1 className="text-center mt-2 styled-font text-dark" style={{}}>
               Sign In
             </h1>
             <br />
-            <Alert style={{ width: "80%" }} />
             <form
               className="form m-auto"
               onSubmit={handleSubmit}
               style={{ width: "80%" }}
             >
+              <Alert style={{ width: "80%" }} />
+
               <div className="input-group mb-3">
                 <span className="input-group-text" id="basic-addon1">
                   @

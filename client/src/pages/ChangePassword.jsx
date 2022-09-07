@@ -1,18 +1,28 @@
 import React from "react";
 
 import { connect } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { changePassword } from "../actions/auth";
 import Alert from "../Components/Alert";
 import PropTypes from "prop-types";
 
-const ChangePassword = ({ changePassword }) => {
+import { setAlert } from "../actions/alert";
+
+const ChangePassword = ({
+  auth: { forgotCodeVerified },
+  changePassword,
+  setAlert,
+}) => {
   const [password, setPassword] = React.useState("");
   const [password2, setPassword2] = React.useState("");
 
   const { code, email } = useParams();
 
   const navigate = useNavigate();
+
+  if (!forgotCodeVerified) {
+    return <Navigate to={"/login"} />;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,10 +34,10 @@ const ChangePassword = ({ changePassword }) => {
 
       //   console.log(data);
       if (res.status === 200) {
-        alert("Password changed successfully");
+        setAlert("Password changed successfully", "success");
         navigate("/login");
       } else {
-        alert("Something went wrong");
+        setAlert("Something went wrong", "danger");
       }
     }
   };
@@ -45,19 +55,19 @@ const ChangePassword = ({ changePassword }) => {
           }}
         >
           <div className="p-4">
-            <h1 className="text-center">Forgot Password</h1>
+            <h1 className="text-center">Change Password</h1>
             <br />
             <h6 className="text-center">
-              No worries ! <br /> Enter your email to send a password reset
-              request !
+              Enter the new password you want for this account.
             </h6>
-            <Alert style={{ width: "80%" }} />
             <br />
             <form
               className="form m-auto "
               onSubmit={handleSubmit}
               style={{ width: "80%" }}
             >
+              <Alert style={{ width: "80%" }} />
+
               <div className="input-group mb-3">
                 <span className="input-group-text" id="basic-addon1">
                   **
@@ -110,10 +120,15 @@ const ChangePassword = ({ changePassword }) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
 
 ChangePassword.propTypes = {
   changePassword: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { changePassword })(ChangePassword);
+export default connect(mapStateToProps, { changePassword, setAlert })(
+  ChangePassword
+);

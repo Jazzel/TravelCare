@@ -4,17 +4,20 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Alert from "../Components/Alert";
 import PropTypes from "prop-types";
 import { verifyCode } from "../actions/auth";
+import { setAlert } from "../actions/alert";
 
-const EmailCode = ({ verifyCode }) => {
+const EmailCode = ({ setAlert, verifyCode }) => {
   const { email } = useParams();
   const navigate = useNavigate();
   const [code, setCode] = React.useState("");
 
-  const handleSubmit = () => {
-    if (verifyCode({ code, email })) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await verifyCode({ code, email });
+    if (res) {
       navigate(`/change-password/${email}/${code}`);
     } else {
-      alert("Given code is incorrect");
+      setAlert("Given code is incorrect", "danger");
     }
   };
 
@@ -37,13 +40,14 @@ const EmailCode = ({ verifyCode }) => {
               An email is sent to '{email}'. <br /> Please enter the
               verification code to continue the process.
             </h6>
-            <Alert style={{ width: "80%" }} />
             <br />
             <form
               className="form m-auto "
               onSubmit={handleSubmit}
               style={{ width: "80%" }}
             >
+              <Alert style={{ width: "80%" }} />
+
               <div className="input-group mb-3">
                 <span className="input-group-text" id="basic-addon1">
                   **
@@ -87,6 +91,7 @@ const mapStateToProps = (state) => {};
 
 EmailCode.propTypes = {
   verifyCode: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { verifyCode })(EmailCode);
+export default connect(mapStateToProps, { verifyCode, setAlert })(EmailCode);

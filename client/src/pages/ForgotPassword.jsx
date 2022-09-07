@@ -1,16 +1,22 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { setAlert } from "../actions/alert";
 import Alert from "../Components/Alert";
 
-const ForgotPassword = () => {
+import PropTypes from "prop-types";
+
+const ForgotPassword = ({ setAlert }) => {
   const [email, setEmail] = React.useState("");
 
   const navigate = useNavigate();
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (email) {
       navigate(`/auth-code/${email}`);
     } else {
-      alert("Please enter a valid email");
+      setAlert("Please enter your email", "danger");
+      // alert("Please enter a valid email");
     }
   };
 
@@ -33,13 +39,14 @@ const ForgotPassword = () => {
               No worries ! <br /> Enter your email to send a password reset
               request !
             </h6>
-            <Alert style={{ width: "80%" }} />
             <br />
             <form
               className="form m-auto "
               onSubmit={handleSubmit}
               style={{ width: "80%" }}
             >
+              <Alert style={{ width: "80%" }} />
+
               <div className="input-group mb-3">
                 <span className="input-group-text" id="basic-addon1">
                   @
@@ -47,7 +54,7 @@ const ForgotPassword = () => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Email"
+                  placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   aria-label="email"
@@ -79,4 +86,10 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+const mapStateToProps = (state) => ({});
+
+ForgotPassword.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, { setAlert })(ForgotPassword);

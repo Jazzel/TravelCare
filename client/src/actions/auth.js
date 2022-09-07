@@ -10,7 +10,9 @@ import {
   LOGOUT,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
+  UNVERIFIED,
   USER_LOADED,
+  VERIFIED,
 } from "./types";
 
 // Load User
@@ -114,12 +116,16 @@ export const verifyCode =
   async (dispatch) => {
     if (code === "batman") {
       dispatch({
-        type: "VERIFIED",
-        payload: true,
+        type: VERIFIED,
       });
 
       return true;
     }
+    dispatch({
+      type: UNVERIFIED,
+    });
+
+    return false;
   };
 
 export const changePassword =
