@@ -1,5 +1,5 @@
 {
-  "mongoURI": "mongodb+srv://jazz:Mpower1234@cluster0.pm5c82v.mongodb.net/?retryWrites=true&w=majority",
+  "mongoURI": "mongodb+srv://arsh:arsh1234@cluster0.pzlydgu.mongodb.net/?retryWrites=true&w=majority",
   "JWTsecretToken": "cyprodev",
   "user": "travellingdiaries2019@gmail.com",
   "pass": "Travel1234",
