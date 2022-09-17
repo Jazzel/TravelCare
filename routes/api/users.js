@@ -9,6 +9,7 @@ const nodemailer = require("nodemailer");
 
 const User = require("../../models/User");
 const { sendConfirmationEmail } = require("../../config/nodemailer");
+const { URL } = require("../..");
 const secretToken = config.get("JWTsecretToken");
 
 const characters =
@@ -65,37 +66,44 @@ router.post(
       user.password = await bcrypt.hash(password, salt);
       const token = jwt.sign({ email: req.body.email }, config.secret);
 
-      // TODO: fix
-      // user.confirmationCode = token;
-      user.confirmationCode = "batman";
+      user.confirmationCode = token;
+      // user.confirmationCode = "batman";
 
-      // await user.save();
+      await user.save();
 
       // sendConfirmationEmail(user.name, user.email, user.confirmationCode);
 
-      const transport = nodemailer.createTransport({
-        service: "smtp.gmail.com",
+      console.log("sending email ...");
+
+      let transport = nodemailer.createTransport({
+        service: "gmail",
         port: 465,
         secure: true,
+        secureConnection: false,
         auth: {
           user: config.get("user"),
           pass: config.get("pass"),
         },
+        tls: {
+          rejectUnAuthorized: true,
+        },
       });
 
-      transport
-        .sendMail({
-          from: user,
-          to: email,
-          subject: "Please confirm your account",
-          html: `<h1>Email Confirmation</h1>
-            <h2>Hello ${name}</h2>
-            <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-            <a href=http://localhost:3000/confirm/dasdasdad}> Click here</a>
+      const mailOptions = {
+        from: `${config.get("user")}`,
+        to: email,
+        subject: "Please confirm your account",
+        html: `<h1>Email Confirmation</h1>
+            <h2>Welcome ${name} to TravelCare</h2>
+            <p>Thank you for joining our team. Click the following link to confirm and activate your new account:</p>
+            <a href=${URL}/confirm/${email}/${token}}>${URL}/confirm/${email}/${token}</a>
+            <br/>
+            <smaill>If the above link is not clickable, try copying and pasting it into the address bar of your web browser.</smaill>
             </div>`,
-        })
-        .catch((err) => console.log(err));
+      };
 
+      let info = await transport.sendMail(mailOptions);
+      console.log(`Message Sent: ${info.messageId}`);
       if (user.status != "Active") {
         return res.status(401).send({
           message: "Pending Account. Please Verify Your Email!",

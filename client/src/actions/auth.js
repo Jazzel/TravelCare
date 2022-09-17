@@ -117,22 +117,62 @@ export const sendEmailForVerification =
   ({ code, email }) =>
   async (dispatch) => {
     // send Email for verification
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const body = JSON.stringify({ email });
+
+    try {
+      const res = await axios.post(`${HOST}/api/send-email`, body, config);
+      console.log(res);
+
+      return true;
+
+      // dispatch(loadUser());
+    } catch (error) {
+      const errors = error.response.data.errors;
+
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+      }
+    }
+    return false;
   };
 
 export const verifyCode =
   ({ code, email }) =>
   async (dispatch) => {
-    if (code === "batman") {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const body = JSON.stringify({ code, email });
+
+    try {
+      const res = await axios.post(`${HOST}/api/verify`, body, config);
+      console.log(res);
       dispatch({
         type: VERIFIED,
       });
-
       return true;
-    }
-    dispatch({
-      type: UNVERIFIED,
-    });
 
+      // dispatch(loadUser());
+    } catch (error) {
+      const errors = error.response.data.errors;
+
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+      }
+
+      dispatch({
+        type: UNVERIFIED,
+      });
+    }
     return false;
   };
 

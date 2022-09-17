@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { register, login } from "../actions/auth";
 import Alert from "../Components/Alert";
 
@@ -22,6 +22,7 @@ const Register = ({ register, isAuthenticated, setAlert }) => {
   const [col, setCol] = React.useState("col-12");
 
   const dropdown = useRef();
+  const navigate = useNavigate();
 
   if (isAuthenticated) {
     return <Navigate to="/dashboard" />;
@@ -56,6 +57,7 @@ const Register = ({ register, isAuthenticated, setAlert }) => {
     } else {
       register({ name, email, password, role });
     }
+    navigate(`/email-sent/${email}`);
   };
 
   return (

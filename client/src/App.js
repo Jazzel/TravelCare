@@ -21,6 +21,8 @@ import Dashboard from "./pages/Dashboard";
 import ForgotPassword from "./pages/ForgotPassword";
 import EmailCode from "./pages/EmailCode";
 import ChangePassword from "./pages/ChangePassword";
+import EmailSent from "./pages/EmailSent";
+import ConfirmAccount from "./pages/ConfirmAccount";
 
 export const HOST = "http://localhost:5000";
 
@@ -50,7 +52,9 @@ const App = () => {
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="forgot-password" element={<ForgotPassword />} />
-              <Route path="auth-code/:email" element={<EmailCode />} />
+              <Route path="confirm/:email/:code" element={<ConfirmAccount />} />
+              <Route path="reset/:email/:code" element={<EmailCode />} />
+              <Route path="email-sent/:email" element={<EmailSent />} />
               <Route
                 path="change-password/:email/:code"
                 element={<ChangePassword />}

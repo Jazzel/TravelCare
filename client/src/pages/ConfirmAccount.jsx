@@ -11,11 +11,14 @@ const EmailCode = ({ setAlert, verifyCode }) => {
   const navigate = useNavigate();
   const [authCode, setAuthCode] = React.useState(code.replace("}", ""));
 
+  const [showForm, setShowForm] = React.useState(true);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await verifyCode({ code: authCode, email });
+    console.log(res);
     if (res) {
-      navigate(`/change-password/${email}/${authCode}`);
+      setShowForm(false);
     } else {
       setAlert("Given code is incorrect", "danger");
     }
@@ -52,52 +55,72 @@ const EmailCode = ({ setAlert, verifyCode }) => {
           }}
         >
           <div className="p-4">
-            <h1 className="text-center">Verification Code</h1>
+            <h1 className="text-center">Email Confimation</h1>
             <br />
             <h6 className="text-center">
               An email is sent to '{email}'. <br /> Please enter the
               verification code to continue the process.
             </h6>
             <br />
-            <form
-              className="form m-auto "
-              onSubmit={handleSubmit}
-              style={{ width: "80%" }}
-            >
-              <Alert style={{ width: "80%" }} />
+            {showForm ? (
+              <form
+                className="form m-auto "
+                onSubmit={handleSubmit}
+                style={{ width: "80%" }}
+              >
+                <Alert style={{ width: "80%" }} />
 
-              <div className="input-group mb-3">
-                <span className="input-group-text" id="basic-addon1">
-                  **
-                </span>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Code"
-                  value={authCode}
-                  onChange={(e) => setAuthCode(e.target.value)}
-                  aria-label="code"
-                />
-              </div>
+                <div className="input-group mb-3">
+                  <span className="input-group-text" id="basic-addon1">
+                    **
+                  </span>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Code"
+                    value={authCode}
+                    onChange={(e) => setAuthCode(e.target.value)}
+                    aria-label="code"
+                  />
+                </div>
 
-              <div className="text-center">
-                <button type="submit" className="btn btn-dark w-100">
-                  Verify Code
-                </button>
-              </div>
-              <div className="mt-2">
-                <Link
-                  className="text-dark"
-                  style={{
-                    textDecoration: "none",
-                  }}
-                  to="/login"
-                >
-                  Go back to Login page
-                </Link>
-              </div>
-              <br />
-            </form>
+                <div className="text-center">
+                  <button type="submit" className="btn btn-dark w-100">
+                    Verify Code
+                  </button>
+                </div>
+                <div className="mt-2">
+                  <Link
+                    className="text-dark"
+                    style={{
+                      textDecoration: "none",
+                    }}
+                    to="/login"
+                  >
+                    Go back to Login page
+                  </Link>
+                </div>
+                <br />
+              </form>
+            ) : (
+              <>
+                <div className="text-center">
+                  <div className={`alert alert-success`}>
+                    Account Verified Successfully !
+                  </div>
+
+                  <Link
+                    className="text-dark"
+                    style={{
+                      textDecoration: "none",
+                    }}
+                    to="/login"
+                  >
+                    Go back to Login page
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

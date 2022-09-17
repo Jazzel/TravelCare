@@ -9,13 +9,13 @@ import { setAlert } from "../actions/alert";
 const EmailCode = ({ setAlert, verifyCode }) => {
   const { email, code } = useParams();
   const navigate = useNavigate();
-  const [authCode, setAuthCode] = React.useState(code.replace("}", ""));
+  const [authCode, setAuthCode] = React.useState(code);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await verifyCode({ code: authCode, email });
+    const res = await verifyCode({ code, email });
     if (res) {
-      navigate(`/change-password/${email}/${authCode}`);
+      navigate(`/change-password/${email}/${code}`);
     } else {
       setAlert("Given code is incorrect", "danger");
     }
@@ -52,52 +52,23 @@ const EmailCode = ({ setAlert, verifyCode }) => {
           }}
         >
           <div className="p-4">
-            <h1 className="text-center">Verification Code</h1>
+            <h1 className="text-center">Email Sent</h1>
             <br />
             <h6 className="text-center">
-              An email is sent to '{email}'. <br /> Please enter the
-              verification code to continue the process.
+              An email is sent to '{email}'. <br /> Please check your inbox for
+              the verification link.
             </h6>
-            <br />
-            <form
-              className="form m-auto "
-              onSubmit={handleSubmit}
-              style={{ width: "80%" }}
-            >
-              <Alert style={{ width: "80%" }} />
-
-              <div className="input-group mb-3">
-                <span className="input-group-text" id="basic-addon1">
-                  **
-                </span>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Code"
-                  value={authCode}
-                  onChange={(e) => setAuthCode(e.target.value)}
-                  aria-label="code"
-                />
-              </div>
-
-              <div className="text-center">
-                <button type="submit" className="btn btn-dark w-100">
-                  Verify Code
-                </button>
-              </div>
-              <div className="mt-2">
-                <Link
-                  className="text-dark"
-                  style={{
-                    textDecoration: "none",
-                  }}
-                  to="/login"
-                >
-                  Go back to Login page
-                </Link>
-              </div>
-              <br />
-            </form>
+            <div className="mt-2 text-center">
+              <Link
+                className="text-dark"
+                style={{
+                  textDecoration: "none",
+                }}
+                to="/login"
+              >
+                Go back to Login page
+              </Link>
+            </div>
           </div>
         </div>
       </div>

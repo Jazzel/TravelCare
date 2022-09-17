@@ -10,12 +10,27 @@ const User = require("./models/User");
 const app = express();
 
 const port = process.env.PORT || 5000;
+const nodemailer = require("nodemailer");
+
+const config = require("config");
 
 connectDB();
 
+let env = process.env.NODE_ENV || "development";
+console.log(env);
+
+const URL =
+  env === "production"
+    ? "https://travel-care.herokuapp.com"
+    : "http://localhost:3000";
+
 app.use(express.json({ extended: false }));
 
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://travel-care.herokuapp.com"],
+  })
+);
 
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
@@ -65,24 +80,26 @@ app.post(
 // @route    POST api/users
 // @desc     Confirm User
 // @access   Public
-app.post("/:code", async (req, res) => {
-  User.findOne({
-    confirmationCode: req.params.code,
-  })
-    .then((user) => {
-      if (!user) {
-        return res.status(404).send({ message: "User Not found." });
-      }
+app.post("/api/verify-code/", async (req, res) => {
+  const user = await User.findOne({
+    email: req.body.email,
+  });
 
+  if (!user) {
+    return res.status(404).send({ message: "User Not found." });
+  }
+
+  if (user) {
+    if (user.confirmationCode === req.body.code) {
       user.status = "Active";
-      user.save((err) => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
-        }
-      });
-    })
-    .catch((e) => console.log("error", e));
+      await user.save();
+      return res
+        .status(200)
+        .send({ message: "User was confirmed successfully!" });
+    } else {
+      return res.status(404).send({ message: "Invalid code" });
+    }
+  }
 });
 
 app.post(
@@ -104,6 +121,37 @@ app.post(
       }
 
       // TODO: send email !
+      console.log("sending email ...");
+
+      let transport = nodemailer.createTransport({
+        service: "gmail",
+        port: 465,
+        secure: true,
+        secureConnection: false,
+        auth: {
+          user: config.get("user"),
+          pass: config.get("pass"),
+        },
+        tls: {
+          rejectUnAuthorized: true,
+        },
+      });
+
+      const mailOptions = {
+        from: `${config.get("user")}`,
+        to: email,
+        subject: "Password Reset Request",
+        html: `<h1>Password Reset Request</h1>
+            <h2>Welcome ${user.name} to TravelCare</h2>
+            <p>We heard you forgot your account. Here's the link to reset your  account password:</p>
+            <a href=${URL}/reset/${email}/${user.confirmationCode}}>${URL}/reset/${email}/${user.confirmationCode}</a>
+            <br/>
+            <smaill>If the above link is not clickable, try copying and pasting it into the address bar of your web browser.</smaill>
+            </div>`,
+      };
+
+      let info = await transport.sendMail(mailOptions);
+      console.log(`Message Sent: ${info.messageId}`);
       return res.status(200).send({ message: "Email sent." });
     } catch (err) {
       console.error(err.message);
@@ -133,8 +181,9 @@ app.post(
       if (!user) {
         return res.status(404).send({ message: "User Not found." });
       }
+      console.log(user.confirmationCode);
 
-      if (user.confirmationCode !== code) {
+      if (user.confirmationCode !== code.trim()) {
         return res.status(404).send({ message: "Wrong Code." });
       }
 
@@ -147,5 +196,7 @@ app.post(
 );
 
 app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
+  console.log(`App listening at ${URL}:${port}`);
 });
+
+module.exports = URL;

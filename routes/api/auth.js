@@ -49,6 +49,12 @@ router.post(
           .status(400)
           .json({ errors: [{ msg: "Invalid credentials" }] });
 
+      if (user.status === "Pending") {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Account not verified" }] });
+      }
+
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch)
