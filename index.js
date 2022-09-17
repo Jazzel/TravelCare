@@ -196,7 +196,5 @@ app.post(
 );
 
 app.listen(port, () => {
-  console.log(`App listening at ${URL}:${port}`);
+  console.log(`App listening at ${port}`);
 });
-
-module.exports = URL;

@@ -9,7 +9,6 @@ const nodemailer = require("nodemailer");
 
 const User = require("../../models/User");
 const { sendConfirmationEmail } = require("../../config/nodemailer");
-const { URL } = require("../..");
 const secretToken = config.get("JWTsecretToken");
 
 const characters =
@@ -18,6 +17,11 @@ let token = "";
 for (let i = 0; i < 25; i++) {
   token += characters[Math.floor(Math.random() * characters.length)];
 }
+
+const URL =
+  process.env.NODE_ENV === "production"
+    ? "https://travel-care.herokuapp.com"
+    : "http://localhost:3000";
 
 // @route    POST api/users
 // @desc     Register User
