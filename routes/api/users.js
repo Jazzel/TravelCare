@@ -69,7 +69,7 @@ router.post(
       // user.confirmationCode = token;
       user.confirmationCode = "batman";
 
-      await user.save();
+      // await user.save();
 
       // sendConfirmationEmail(user.name, user.email, user.confirmationCode);
 
@@ -96,23 +96,23 @@ router.post(
         })
         .catch((err) => console.log(err));
 
-      // if (user.status != "Active") {
-      //   return res.status(401).send({
-      //     message: "Pending Account. Please Verify Your Email!",
-      //   });
-      // }
+      if (user.status != "Active") {
+        return res.status(401).send({
+          message: "Pending Account. Please Verify Your Email!",
+        });
+      }
 
       // Return JWT
-      const payload = {
-        user: {
-          id: user.id,
-        },
-      };
+      // const payload = {
+      //   user: {
+      //     id: user.id,
+      //   },
+      // };
 
-      jwt.sign(payload, secretToken, { expiresIn: 360000 }, (err, token) => {
-        if (err) throw err;
-        return res.json({ token });
-      });
+      // jwt.sign(payload, secretToken, { expiresIn: 360000 }, (err, token) => {
+      //   if (err) throw err;
+      //   return res.json({ token });
+      // });
     } catch (err) {
       console.error(err.message);
       return res.status(500).send("Server error");
