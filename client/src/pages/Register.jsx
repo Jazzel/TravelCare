@@ -24,9 +24,9 @@ const Register = ({ register, isAuthenticated, setAlert }) => {
   const dropdown = useRef();
   const navigate = useNavigate();
 
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" />;
-  }
+  // if (isAuthenticated) {
+  //   return <Navigate to="/dashboard" />;
+  // }
 
   const showMoreFields = () => {
     if (dropdown.current.value === "business") {
@@ -42,22 +42,35 @@ const Register = ({ register, isAuthenticated, setAlert }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const role = dropdown.current.value || "user";
     console.log(e.target.value, role, _role);
 
+    let response;
     if (_role === "business") {
       if (!businessname || !address || !phone) {
         setAlert("Please fill all fields", "danger");
       } else {
-        register({ name, email, password, role, businessname, address, phone });
+        response = await register({
+          name,
+          email,
+          password,
+          role,
+          businessname,
+          address,
+          phone,
+        });
       }
     } else {
-      register({ name, email, password, role });
+      response = await register({ name, email, password, role });
     }
-    navigate(`/email-sent/${email}`);
+
+    console.log(response);
+    if (response === 200) {
+      navigate(`/email-sent/${email}`);
+    }
   };
 
   return (

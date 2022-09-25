@@ -109,7 +109,7 @@ router.post(
       let info = await transport.sendMail(mailOptions);
       console.log(`Message Sent: ${info.messageId}`);
       if (user.status != "Active") {
-        return res.status(401).send({
+        return res.status(200).send({
           message: "Pending Account. Please Verify Your Email!",
         });
       }

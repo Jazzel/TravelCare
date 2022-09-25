@@ -60,6 +60,8 @@ export const register =
         payload: res.data,
       });
       dispatch(loadUser());
+
+      return res.status;
     } catch (error) {
       const errors = error.response.data.errors;
 
