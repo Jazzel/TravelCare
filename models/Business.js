@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Create Schema
-const Business = new Schema(
+const BusinessSchema = new Schema(
   {
     name: {
       type: String,
@@ -20,4 +20,4 @@ const Business = new Schema(
   { timestamps: true }
 );
 
-module.exports = Business = mongoose.model("business", Business);
+module.exports = Business = mongoose.model("business", BusinessSchema);
