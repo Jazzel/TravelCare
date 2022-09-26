@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { getBusinesses } from "../actions/business";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 
-const Home = () => {
+const Home = ({ business: { loading, businesses }, getBusinesses }) => {
   const testimonials = [
     {
       name: "User Dave",
@@ -30,6 +32,10 @@ const Home = () => {
       rating: 4,
     },
   ];
+
+  useEffect(() => {
+    getBusinesses();
+  }, [getBusinesses]);
 
   return (
     <>
@@ -127,7 +133,54 @@ const Home = () => {
         </section>
       </div>
       <section className="container mb-5" style={{ marginTop: "100px" }}>
-        {/* TOOD: Cards */}
+        <h2
+          style={{
+            textAlign: "center",
+            textTransform: "uppercase",
+            letterSpacing: "5px",
+            fontWeight: "600",
+          }}
+        >
+          Trending Services
+        </h2>
+        <br />
+        <br />
+        <div className="row">
+          {!loading && businesses && businesses.length > 0 ? (
+            businesses.slice(0, 4).map(({ name, description }) => (
+              <div className="col-12 col-md-6 p-2">
+                <div class="card shadow text-left">
+                  <div class="card-body">
+                    <h4 class="card-title">{name}</h4>
+                    <p class="card-text">{description}</p>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div class="card col text-left shadow">
+              <div class="card-body">
+                <p class="card-text text-center">
+                  No services available right now !
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+        <br />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {!loading && businesses && businesses.length > 0 && (
+            <button className="btn btn-dark text-center m-auto">
+              View More >
+            </button>
+          )}
+        </div>
       </section>
       <section className="container mb-5" style={{ marginTop: "100px" }}>
         <h2
@@ -191,4 +244,8 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => ({
+  business: state.business,
+});
+
+export default connect(mapStateToProps, { getBusinesses })(Home);

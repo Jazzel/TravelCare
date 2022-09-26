@@ -7,6 +7,7 @@ import {
   DELETE_BUSINESS,
   GET_BUSINESS,
   GET_BUSINESSES,
+  UPDATE_BUSINESS,
 } from "./types";
 
 // Get businesses
@@ -33,6 +34,7 @@ export const getBusiness = (id) => async (dispatch) => {
       type: GET_BUSINESS,
       payload: res.data,
     });
+    return res.data;
   } catch (err) {
     dispatch({
       type: BUSINESS_ERROR,
@@ -50,6 +52,7 @@ export const addBusiness = (formData) => async (dispatch) => {
       payload: res.data,
     });
     dispatch(setAlert("Business Created", "success"));
+    return res;
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
@@ -84,10 +87,11 @@ export const editBusiness = (formData, id) => async (dispatch) => {
   try {
     const res = await axios.put(`${HOST}/api/businesses/${id}`, formData);
     dispatch({
-      type: GET_BUSINESS,
+      type: UPDATE_BUSINESS,
       payload: res.data,
     });
     dispatch(setAlert("Business Updated", "success"));
+    return res;
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {

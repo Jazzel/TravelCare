@@ -23,6 +23,10 @@ import EmailCode from "./pages/EmailCode";
 import ChangePassword from "./pages/ChangePassword";
 import EmailSent from "./pages/EmailSent";
 import ConfirmAccount from "./pages/ConfirmAccount";
+import AddBusiness from "./pages/AddBusiness";
+import UpdateBusiness from "./pages/UpdateBusiness";
+import BusinessDetail from "./pages/BusinessDetail";
+import Business from "./pages/Business";
 
 export const HOST = "http://localhost:5000";
 
@@ -48,6 +52,7 @@ const App = () => {
             <Route path="/*">
               <Route index element={<Home />} />
               <Route path="about" element={<About />} />
+              <Route path="business" element={<Business />} />
               <Route path="contact" element={<Contact />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
@@ -64,6 +69,30 @@ const App = () => {
                 element={
                   <PrivateRoute>
                     <Dashboard />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="add-business"
+                element={
+                  <PrivateRoute>
+                    <AddBusiness />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="update-business/:id"
+                element={
+                  <PrivateRoute>
+                    <UpdateBusiness />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="business/:id"
+                element={
+                  <PrivateRoute>
+                    <BusinessDetail />
                   </PrivateRoute>
                 }
               />

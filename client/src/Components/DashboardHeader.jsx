@@ -10,8 +10,8 @@ const DashboardHeader = ({ auth: { user, role }, logout }) => {
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow">
-        <div className="container-fluid">
-          <Link className="navbar-brand" to="/dashboard">
+        <div className="container">
+          <Link className="navbar-brand styled-font" to="/dashboard">
             Dashboard
           </Link>
           <button
