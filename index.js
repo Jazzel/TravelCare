@@ -34,6 +34,7 @@ app.use(
 
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
+app.use("/api/businesses", require("./routes/api/business"));
 
 app.post(
   "/api/change-password",
@@ -186,7 +187,8 @@ app.post(
       if (user.confirmationCode !== code.trim()) {
         return res.status(404).send({ message: "Wrong Code." });
       }
-
+      user.status = "Active";
+      user.save();
       return res.status(200).send({ message: "User authorized" });
     } catch (err) {
       console.error(err.message);

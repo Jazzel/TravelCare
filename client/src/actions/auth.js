@@ -158,11 +158,14 @@ export const verifyCode =
     try {
       const res = await axios.post(`${HOST}/api/verify`, body, config);
       console.log(res);
-      dispatch({
-        type: VERIFIED,
-      });
-      return true;
 
+      if (res.status === 200) {
+        dispatch({
+          type: VERIFIED,
+        });
+        return true;
+      }
+      return false;
       // dispatch(loadUser());
     } catch (error) {
       const errors = error.response.data.errors;

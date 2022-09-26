@@ -16,7 +16,6 @@ const EmailCode = ({ setAlert, verifyCode }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await verifyCode({ code: authCode, email });
-    console.log(res);
     if (res) {
       setShowForm(false);
     } else {
