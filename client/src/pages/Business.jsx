@@ -37,16 +37,34 @@ const Business = ({ business: { loading, businesses }, getBusinesses }) => {
       <section className="container pl-5 pt-5 pr-5">
         <div className="row">
           {!loading && businesses && businesses.length > 0 ? (
-            businesses.slice(0, 4).map(({ name, description }) => (
-              <div className="col-12 col-md-6 p-2">
-                <div class="card shadow text-left">
-                  <div class="card-body">
-                    <h4 class="card-title">{name}</h4>
-                    <p class="card-text">{description}</p>
+            businesses.map(
+              ({
+                name,
+                description,
+                businessname,
+                username,
+                phone,
+                address,
+                updatedAt,
+              }) => (
+                <div className="card mt-3 shadow">
+                  <div className="card-body p-5">
+                    <div className="styled-back">@</div>
+                    <h3>
+                      {name} by @{businessname}
+                    </h3>
+                    <br />
+                    <p>{description}</p>
+                    <p>
+                      Added By: {username} <br />
+                      Contact Number: {phone} <br />
+                      Address: {address} <br />
+                      Last updated: {new Date(`${updatedAt}`).toLocaleString()}
+                    </p>
                   </div>
                 </div>
-              </div>
-            ))
+              )
+            )
           ) : (
             <div class="card col text-left shadow">
               <div class="card-body">

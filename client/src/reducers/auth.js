@@ -30,6 +30,7 @@ export default function auth(state = initialState, action) {
         loading: false,
         user: payload,
         role: payload.role,
+        username: payload.name,
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:

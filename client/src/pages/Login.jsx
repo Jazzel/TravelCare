@@ -5,7 +5,7 @@ import { login } from "../actions/auth";
 import PropTypes from "prop-types";
 import Alert from "../Components/Alert";
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, role }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
@@ -16,6 +16,9 @@ const Login = ({ login, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
+    if (role === "user") {
+      return <Navigate to="/user-dashboard" />;
+    }
     return <Navigate to="/dashboard" />;
   }
   return (

@@ -10,6 +10,7 @@ import Footer from "../Components/Footer";
 
 const Dashboard = ({
   business: { loading, businesses },
+  auth: { role, username },
   getBusinesses,
   deleteBusiness,
 }) => {
@@ -47,7 +48,10 @@ const Dashboard = ({
             </tr>
           </thead>
           <tbody>
-            {!loading && businesses && businesses.length > 0 ? (
+            {!loading &&
+            businesses &&
+            role === "admin" &&
+            businesses.length > 0 ? (
               businesses.map(({ _id, name, addedBy }) => (
                 <tr key={_id}>
                   <td scope="row">{name}</td>
@@ -76,7 +80,40 @@ const Dashboard = ({
                   </td>
                 </tr>
               ))
+            ) : role !== "admin" ? (
+              businesses
+                .filter((_business) => _business.username === username)
+                .map(({ _id, name, addedBy }) => (
+                  <tr key={_id}>
+                    <td scope="row">{name}</td>
+                    <td>{addedBy}</td>
+                    <td>
+                      <button
+                        className="btn btn-dark"
+                        onClick={() => navigate(`/business/${_id}`)}
+                      >
+                        View
+                      </button>{" "}
+                      |{" "}
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => navigate(`/update-business/${_id}`)}
+                      >
+                        Update
+                      </button>{" "}
+                      |{" "}
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => deleteBusiness(_id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
             ) : (
+              //   .map(<></>)
+              // <></>
               <tr>
                 <td colSpan={3} style={{ textAlign: "center" }}>
                   No businesses found !
@@ -96,6 +133,7 @@ const Dashboard = ({
 
 const mapStateToProps = (state) => ({
   business: state.business,
+  auth: state.auth,
 });
 
 Dashboard.propTypes = {

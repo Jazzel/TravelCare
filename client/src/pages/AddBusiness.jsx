@@ -15,7 +15,7 @@ const AddBusiness = ({ addBusiness, setAlert, auth: { user } }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (name !== "" && description !== "") {
-      const formData = { name, description, addedBy: user?.name };
+      const formData = { name, description, addedBy: user?._id };
 
       const response = await addBusiness(formData);
       if (response.status === 200) {

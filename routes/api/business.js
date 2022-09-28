@@ -88,8 +88,29 @@ router.get("/", async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
 
   try {
+    let data = [];
     const businesses = await Business.find().sort({ date: -1 });
-    return res.status(200).send(businesses);
+
+    for (const business of businesses) {
+      const userData = await User.findById(business.addedBy).select([
+        "name",
+        "email",
+        "businessname",
+        "address",
+        "phone",
+        "-_id",
+      ]);
+      const user = {
+        username: userData["_doc"].name,
+        email: userData["_doc"].email,
+        businessname: userData["_doc"].businessname,
+        address: userData["_doc"].address,
+        phone: userData["_doc"].phone,
+      };
+      data = [{ ...business["_doc"], ...user }, ...data];
+    }
+
+    return res.status(200).send(data);
   } catch (error) {
     console.error(error.message);
     return res.status(500).send("Server error");
@@ -105,9 +126,31 @@ router.get("/:id", [], async (req, res) => {
     const { id } = req.params;
 
     const business = await Business.findById(id);
-    return res.status(200).send(business);
+
+    if (!business) {
+      return res.status(401).send("Business not found !");
+    }
+
+    const userData = await User.findById(business.addedBy).select([
+      "name",
+      "email",
+      "businessname",
+      "address",
+      "phone",
+      "-_id",
+    ]);
+
+    const user = {
+      username: userData["_doc"].name,
+      email: userData["_doc"].email,
+      businessname: userData["_doc"].businessname,
+      address: userData["_doc"].address,
+      phone: userData["_doc"].phone,
+    };
+
+    return res.status(200).json({ ...business["_doc"], ...user });
   } catch (error) {
-    console.error(err.message);
+    console.error(error.message);
     return res.status(500).send("Server error");
   }
 });

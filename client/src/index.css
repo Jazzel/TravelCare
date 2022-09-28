@@ -67,3 +67,13 @@ code {
 .main-container {
   transition: width 1.2s;
 }
+
+.styled-back {
+  font-size: 200px;
+  transform: rotate(-20deg);
+  position: absolute;
+  overflow: hidden;
+  bottom: -10px;
+  right: 0;
+  opacity: 0.2;
+}
