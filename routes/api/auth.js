@@ -55,6 +55,16 @@ router.post(
           .json({ errors: [{ msg: "Account not verified" }] });
       }
 
+      if (user.status === "Blocked") {
+        return res
+          .status(400)
+          .json({
+            errors: [
+              { msg: "Account blocked. Contact admin for more information" },
+            ],
+          });
+      }
+
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch)

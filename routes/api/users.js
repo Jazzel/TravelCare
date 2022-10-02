@@ -9,6 +9,7 @@ const nodemailer = require("nodemailer");
 
 const User = require("../../models/User");
 const { sendConfirmationEmail } = require("../../config/nodemailer");
+const auth = require("../../middlewares/auth");
 const secretToken = config.get("JWTsecretToken");
 
 const characters =
@@ -23,8 +24,8 @@ const URL =
     ? "https://travel-care.herokuapp.com"
     : "http://localhost:3000";
 
-// @route    POST api/users
-// @desc     Register User
+// @route    GET api/users
+// @desc     GET all User
 // @access   Public
 router.post(
   "/",
@@ -131,5 +132,36 @@ router.post(
     }
   }
 );
+
+router.get("/", auth, async (req, res) => {
+  try {
+    const user = await User.find().select(["-password", "-confirmationCode"]);
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.get("/:id", auth, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findById(id).select([
+      "-password",
+      "-confirmationCode",
+    ]);
+
+    if (user.status !== "Active") {
+      user.status = "Active";
+    } else {
+      user.status = "Blocked";
+    }
+    await user.save();
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 module.exports = router;

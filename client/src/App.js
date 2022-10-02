@@ -85,17 +85,17 @@ const App = () => {
               <Route
                 path="add-business"
                 element={
-                  <PrivateRoute>
+                  <AdminRoute>
                     <AddBusiness />
-                  </PrivateRoute>
+                  </AdminRoute>
                 }
               />
               <Route
                 path="update-business/:id"
                 element={
-                  <PrivateRoute>
+                  <AdminRoute>
                     <UpdateBusiness />
-                  </PrivateRoute>
+                  </AdminRoute>
                 }
               />
               <Route

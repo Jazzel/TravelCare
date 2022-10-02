@@ -5,7 +5,7 @@ import { login } from "../actions/auth";
 import PropTypes from "prop-types";
 import Alert from "../Components/Alert";
 
-const Login = ({ login, isAuthenticated, role }) => {
+const Login = ({ login, isAuthenticated, auth: { role } }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
@@ -18,8 +18,9 @@ const Login = ({ login, isAuthenticated, role }) => {
   if (isAuthenticated) {
     if (role === "user") {
       return <Navigate to="/user-dashboard" />;
+    } else {
+      return <Navigate to="/dashboard" />;
     }
-    return <Navigate to="/dashboard" />;
   }
   return (
     <div className="login-container">
@@ -125,10 +126,12 @@ const Login = ({ login, isAuthenticated, role }) => {
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  user: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { login })(Login);

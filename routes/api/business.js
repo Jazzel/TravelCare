@@ -50,7 +50,6 @@ router.put("/:id", [], async (req, res) => {
 
     business.name = name || business.name;
     business.description = description || business.description;
-    business.addedBy = addedBy || business.addedBy;
 
     business.save();
     return res.status(200).send(business);

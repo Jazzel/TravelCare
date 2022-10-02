@@ -5,6 +5,7 @@ import { setAlert } from "./alert";
 import {
   AUTH_ERROR,
   CLEAR_PROFILE,
+  GET_USERS,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT,
@@ -208,3 +209,36 @@ export const changePassword =
       }
     }
   };
+
+export const getUsers = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${HOST}/api/users`);
+    console.log(res);
+    dispatch({
+      type: GET_USERS,
+      payload: res.data,
+    });
+    return res;
+  } catch (error) {
+    const errors = error.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    }
+  }
+};
+
+export const deactivateUser = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${HOST}/api/users/${id}`);
+    console.log(res);
+    dispatch(getUsers());
+    return res;
+  } catch (error) {
+    const errors = error.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    }
+  }
+};

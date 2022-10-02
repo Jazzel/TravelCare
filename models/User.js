@@ -23,7 +23,7 @@ const UserSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["Pending", "Active"],
+      enum: ["Pending", "Active", "Blocked"],
       default: "Pending",
     },
     confirmationCode: {

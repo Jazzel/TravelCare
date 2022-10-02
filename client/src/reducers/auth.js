@@ -1,6 +1,7 @@
 import {
   ACCOUNT_DELETED,
   AUTH_ERROR,
+  GET_USERS,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT,
@@ -17,6 +18,7 @@ const initialState = {
   loading: true,
   user: null,
   role: null,
+  users: null,
   forgotCodeVerified: null,
 };
 
@@ -31,6 +33,7 @@ export default function auth(state = initialState, action) {
         user: payload,
         role: payload.role,
         username: payload.name,
+        status: payload.status,
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
@@ -56,12 +59,20 @@ export default function auth(state = initialState, action) {
     case VERIFIED:
       return {
         ...state,
+        loading: false,
         forgotCodeVerified: true,
       };
     case UNVERIFIED:
       return {
         ...state,
+        loading: false,
         forgotCodeVerified: false,
+      };
+    case GET_USERS:
+      return {
+        ...state,
+        users: payload,
+        loading: false,
       };
     default:
       return state;
