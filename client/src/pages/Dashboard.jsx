@@ -66,23 +66,25 @@ const Dashboard = ({
               </thead>
               <tbody>
                 {!loading && users && role === "admin" && users.length > 0 ? (
-                  users.map(({ _id, name, role, status }) => (
-                    <tr key={_id}>
-                      <td scope="row">{name}</td>
-                      <td>{role}</td>
-                      <td>{status}</td>
-                      <td>
-                        {status !== "Pending" && (
-                          <button
-                            className="btn btn-danger"
-                            onClick={() => deactivateUser(_id)}
-                          >
-                            {status === "Active" ? "Deactivate" : "Activate"}
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  ))
+                  users
+                    .filter((user) => user.role !== "admin")
+                    .map(({ _id, name, role, status }) => (
+                      <tr key={_id}>
+                        <td scope="row">{name}</td>
+                        <td>{role}</td>
+                        <td>{status}</td>
+                        <td>
+                          {status !== "Pending" && (
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => deactivateUser(_id)}
+                            >
+                              {status === "Active" ? "Deactivate" : "Activate"}
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))
                 ) : (
                   //   .map(<></>)
                   // <></>
