@@ -90,23 +90,27 @@ router.get("/", async (req, res) => {
     let data = [];
     const businesses = await Business.find().sort({ date: -1 });
 
-    for (const business of businesses) {
-      const userData = await User.findById(business.addedBy).select([
-        "name",
-        "email",
-        "businessname",
-        "address",
-        "phone",
-        "-_id",
-      ]);
-      const user = {
-        username: userData["_doc"].name,
-        email: userData["_doc"].email,
-        businessname: userData["_doc"].businessname,
-        address: userData["_doc"].address,
-        phone: userData["_doc"].phone,
-      };
-      data = [{ ...business["_doc"], ...user }, ...data];
+    if (businesses.length > 0) {
+      for (const business of businesses) {
+        const userData = await User.findById(business.addedBy).select([
+          "name",
+          "email",
+          "businessname",
+          "address",
+          "phone",
+          "-_id",
+        ]);
+        if (userData) {
+          const user = {
+            username: userData.name,
+            email: userData.email,
+            businessname: userData.businessname,
+            address: userData.address,
+            phone: userData.phone,
+          };
+          data = [{ ...business["_doc"], ...user }, ...data];
+        }
+      }
     }
 
     return res.status(200).send(data);
