@@ -15,6 +15,7 @@ const UpdateBusiness = ({
 }) => {
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
+  const [price, setPrice] = React.useState("");
 
   const { id } = useParams();
 
@@ -23,6 +24,7 @@ const UpdateBusiness = ({
       const business = await getBusiness(id);
       setName(business.name);
       setDescription(business.description);
+      setPrice(business.price);
     };
 
     fetchBusiness();
@@ -32,14 +34,16 @@ const UpdateBusiness = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (name !== "" && description !== "") {
-      const formData = { name, description, addedBy: user?.name };
+      const formData = { name, description, addedBy: user?.name, price };
+
+      console.log(formData);
 
       const response = await editBusiness(formData, id);
       if (response.status === 200) {
         navigate("/dashboard");
       }
     } else {
-      setAlert("Name and description both are required", "danger");
+      setAlert("Name, price and description all are required", "danger");
     }
   };
 
@@ -51,10 +55,9 @@ const UpdateBusiness = ({
         <form onSubmit={handleSubmit}>
           <h1>Update Business</h1>
           <br />
+          <Alert />
 
           <div class="form-group w-50">
-            <Alert />
-
             <label for="">Name:</label>
             <input
               type="text"
@@ -65,7 +68,22 @@ const UpdateBusiness = ({
               onChange={(e) => setName(e.target.value)}
             />
             <small id="helpId" class="form-text text-muted">
-              Name of the business.
+              Name of the service.
+            </small>
+          </div>
+
+          <div class="form-group w-50 mt-4">
+            <label for="">Price:</label>
+            <input
+              type="text"
+              class="form-control"
+              aria-describedby="helpId"
+              placeholder=""
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+            <small id="helpId" class="form-text text-muted">
+              Price for the service.
             </small>
           </div>
           <div class="form-group w-50 mt-4">

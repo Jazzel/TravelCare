@@ -43,6 +43,11 @@ const Header = () => {
                   About Us
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/cart">
+                  Cart
+                </Link>
+              </li>
             </ul>
             <span className="navbar-text">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">

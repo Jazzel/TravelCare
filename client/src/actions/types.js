@@ -34,3 +34,10 @@ export const UPDATE_BUSINESS = "UPDATE_BUSINESS";
 export const DELETE_BUSINESS = "DELETE_BUSINESS";
 export const ADD_BUSINESS = "ADD_BUSINESS";
 export const GET_USERS = "GET_USERS";
+
+export const ADD_TO_CART = "ADD_TO_CART";
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const CLEAR_CART = "CLEAR_CART";
+export const CART_ERROR = "CART_ERROR";
+export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART";
+export const ADD_ONE_TO_CART = "ADD_ONE_TO_CART";

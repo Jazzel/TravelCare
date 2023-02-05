@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { getBusinesses, deleteBusiness } from "../actions/business";
 import DashboardHeader from "../Components/DashboardHeader";
@@ -20,6 +20,8 @@ const Dashboard = ({
   logout,
 }) => {
   const navigate = useNavigate();
+
+  const [getAllServices, setGetAllServices] = useState(false);
 
   useEffect(() => {
     if (role === "admin") {
@@ -90,7 +92,7 @@ const Dashboard = ({
                   // <></>
                   <tr>
                     <td colSpan={3} style={{ textAlign: "center" }}>
-                      No businesses found !
+                      No users found !
                     </td>
                   </tr>
                 )}
@@ -101,14 +103,20 @@ const Dashboard = ({
 
         <div className="row">
           <div className="col-10">
-            <h1>Businesses</h1>
+            <h1> {role === "admin" ? "Services" : "My Services"}</h1>
           </div>
           <div className="col-2">
             <button
-              className="btn btn-primary w-100"
+              className="btn btn-dark w-100"
+              onClick={() => setGetAllServices(!getAllServices)}
+            >
+              {getAllServices ? "My Services" : "All Services"}
+            </button>
+            <button
+              className="btn mt-2 btn-primary w-100"
               onClick={() => navigate("/add-business")}
             >
-              + Add business
+              + Add service
             </button>
           </div>
         </div>
@@ -116,7 +124,7 @@ const Dashboard = ({
         <table className="table table-striped">
           <thead className="thead-dark ">
             <tr>
-              <th>Business Title</th>
+              <th>Service Title</th>
               <th>Added By</th>
               <th>Actions</th>
             </tr>
@@ -126,10 +134,12 @@ const Dashboard = ({
             businesses &&
             role === "admin" &&
             businesses.length > 0 ? (
-              businesses.map(({ _id, name, addedBy }) => (
+              businesses.map(({ _id, name, username, businessname }) => (
                 <tr key={_id}>
                   <td scope="row">{name}</td>
-                  <td>{addedBy}</td>
+                  <td>
+                    {username} @{businessname}
+                  </td>
                   <td>
                     <button
                       className="btn btn-dark"
@@ -154,13 +164,16 @@ const Dashboard = ({
                   </td>
                 </tr>
               ))
-            ) : role !== "admin" ? (
+            ) : role !== "admin" && !getAllServices ? (
               businesses
                 .filter((_business) => _business.username === username)
-                .map(({ _id, name, addedBy }) => (
+                .map(({ _id, name, addedBy, username, businessname }) => (
                   <tr key={_id}>
                     <td scope="row">{name}</td>
-                    <td>{addedBy}</td>
+                    <td>
+                      {username} @{businessname}
+                    </td>
+
                     <td>
                       <button
                         className="btn btn-dark"
@@ -182,6 +195,25 @@ const Dashboard = ({
                       >
                         Delete
                       </button>
+                    </td>
+                  </tr>
+                ))
+            ) : role !== "admin" && getAllServices ? (
+              businesses
+                .filter((_business) => _business.username === username)
+                .map(({ _id, name, addedBy, username, businessname }) => (
+                  <tr key={_id}>
+                    <td scope="row">{name}</td>
+                    <td>
+                      {username} @{businessname}{" "}
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-dark"
+                        onClick={() => navigate(`/business/${_id}`)}
+                      >
+                        View
+                      </button>{" "}
                     </td>
                   </tr>
                 ))

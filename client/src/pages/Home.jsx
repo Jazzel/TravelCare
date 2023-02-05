@@ -184,9 +184,9 @@ const Home = ({ business: { loading, businesses }, getBusinesses }) => {
                 )
               )
           ) : (
-            <div class="card col text-left shadow">
-              <div class="card-body">
-                <p class="card-text text-center">
+            <div className="card col text-left shadow">
+              <div className="card-body">
+                <p className="card-text text-center">
                   No services available right now !
                 </p>
               </div>

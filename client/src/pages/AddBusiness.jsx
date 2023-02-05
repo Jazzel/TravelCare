@@ -10,12 +10,13 @@ import Footer from "../Components/Footer";
 const AddBusiness = ({ addBusiness, setAlert, auth: { user } }) => {
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
+  const [price, setPrice] = React.useState("");
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (name !== "" && description !== "") {
-      const formData = { name, description, addedBy: user?._id };
+    if (name !== "" && description !== "" && price > 0) {
+      const formData = { name, description, addedBy: user?._id, price };
 
       const response = await addBusiness(formData);
       if (response.status === 200) {
@@ -32,12 +33,11 @@ const AddBusiness = ({ addBusiness, setAlert, auth: { user } }) => {
 
       <div className="container p-5">
         <form onSubmit={handleSubmit}>
-          <h1>Add Business</h1>
+          <h1>Add Service</h1>
           <br />
 
+          <Alert />
           <div class="form-group w-50">
-            <Alert />
-
             <label for="">Name:</label>
             <input
               type="text"
@@ -48,7 +48,21 @@ const AddBusiness = ({ addBusiness, setAlert, auth: { user } }) => {
               onChange={(e) => setName(e.target.value)}
             />
             <small id="helpId" class="form-text text-muted">
-              Name of the business.
+              Name of the service.
+            </small>
+          </div>
+          <div class="form-group w-50 mt-4">
+            <label for="">Price:</label>
+            <input
+              type="number"
+              class="form-control"
+              aria-describedby="helpId"
+              placeholder=""
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+            <small id="helpId" class="form-text text-muted">
+              Price for the service.
             </small>
           </div>
           <div class="form-group w-50 mt-4">
@@ -63,12 +77,12 @@ const AddBusiness = ({ addBusiness, setAlert, auth: { user } }) => {
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
             <small id="helpId" class="form-text text-muted">
-              Brief description of your business.
+              Brief description of your service.
             </small>
           </div>
           <div class="form-group w-50 mt-4">
             <button className="btn btn-primary w-100" type="submit">
-              Add Business
+              Add Service
             </button>
           </div>
         </form>

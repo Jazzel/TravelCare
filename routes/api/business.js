@@ -7,6 +7,7 @@ router.post(
   "/",
   [
     check("name", "Name is required").not().isEmpty(),
+    check("price", "Price is required").not().isEmpty(),
     check("description", "Description is required").not().isEmpty(),
     check("addedBy", "Added By is required").not().isEmpty(),
   ],
@@ -16,12 +17,13 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
 
     try {
-      const { name, description, addedBy } = req.body;
+      const { name, description, addedBy, price } = req.body;
 
       let business = new Business({
         name,
         description,
         addedBy,
+        price,
       });
 
       business.save();
@@ -39,7 +41,7 @@ router.put("/:id", [], async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
 
   try {
-    const { name, description, addedBy } = req.body;
+    const { name, description, addedBy, price } = req.body;
 
     const { id } = req.params;
     const business = await Business.findById(id);
@@ -50,6 +52,7 @@ router.put("/:id", [], async (req, res) => {
 
     business.name = name || business.name;
     business.description = description || business.description;
+    business.price = price || business.price;
 
     business.save();
     return res.status(200).send(business);

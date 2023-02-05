@@ -29,6 +29,8 @@ import BusinessDetail from "./pages/BusinessDetail";
 import Business from "./pages/Business";
 import AdminRoute from "./routing/AdminRoute";
 import UserDashboard from "./pages/UserDashboard";
+import Messages from "./pages/Messages";
+import Cart from "./pages/Cart";
 
 export const HOST = "http://localhost:5000";
 
@@ -103,6 +105,22 @@ const App = () => {
                 element={
                   <PrivateRoute>
                     <BusinessDetail />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="messages"
+                element={
+                  <PrivateRoute>
+                    <Messages />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="cart"
+                element={
+                  <PrivateRoute>
+                    <Cart />
                   </PrivateRoute>
                 }
               />

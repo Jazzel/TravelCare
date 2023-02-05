@@ -1,10 +1,15 @@
 import React, { useEffect } from "react";
 import Header from "../Components/Header";
 import { getBusinesses } from "../actions/business";
+import { addToCart } from "../actions/cart";
 import { connect } from "react-redux";
 import Footer from "../Components/Footer";
 
-const Business = ({ business: { loading, businesses }, getBusinesses }) => {
+const Business = ({
+  business: { loading, businesses },
+  getBusinesses,
+  addToCart,
+}) => {
   useEffect(() => {
     getBusinesses();
   }, [getBusinesses]);
@@ -39,10 +44,12 @@ const Business = ({ business: { loading, businesses }, getBusinesses }) => {
           {!loading && businesses && businesses.length > 0 ? (
             businesses.map(
               ({
+                _id,
                 name,
                 description,
                 businessname,
                 username,
+                price,
                 phone,
                 address,
                 updatedAt,
@@ -55,12 +62,34 @@ const Business = ({ business: { loading, businesses }, getBusinesses }) => {
                     </h3>
                     <br />
                     <p>{description}</p>
+                    <p>Price: {price} $</p>
+                    <br />
                     <p>
                       Added By: {username} <br />
                       Contact Number: {phone} <br />
                       Address: {address} <br />
                       Last updated: {new Date(`${updatedAt}`).toLocaleString()}
                     </p>
+                    <button
+                      className="btn btn-dark"
+                      onClick={() => {
+                        const product = {
+                          _id,
+                          name,
+                          description,
+                          businessname,
+                          username,
+                          phone,
+                          address,
+                          price,
+                          updatedAt,
+                        };
+
+                        addToCart(product);
+                      }}
+                    >
+                      Add to Cart
+                    </button>
                   </div>
                 </div>
               )
@@ -85,4 +114,4 @@ const mapStateToProps = (state) => ({
   business: state.business,
 });
 
-export default connect(mapStateToProps, { getBusinesses })(Business);
+export default connect(mapStateToProps, { getBusinesses, addToCart })(Business);

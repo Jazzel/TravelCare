@@ -46,6 +46,11 @@ const DashboardHeader = ({ auth: { user, role }, logout }) => {
                   </a>
                 </li>
               )}
+              <li className="nav-item">
+                <Link className="nav-link" to="/messages">
+                  Messages
+                </Link>
+              </li>
             </ul>
             <span className="navbar-text">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">

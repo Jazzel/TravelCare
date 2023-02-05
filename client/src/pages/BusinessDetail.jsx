@@ -31,6 +31,7 @@ const BusinessDetail = ({ business: { loading, business }, getBusiness }) => {
               </h3>
               <br />
               <p>{business?.description}</p>
+              <p>Price: {business?.price} $</p>
               <p>
                 Added By: {business?.username} <br />
                 Contact Number: {business?.phone} <br />
