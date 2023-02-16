@@ -46,6 +46,9 @@ const Wrapper = ({ children }) => {
 };
 const App = () => {
   useEffect(() => {
+    let visitorCount = localStorage.getItem("visitorCount");
+    localStorage.setItem("visitorCount", ++visitorCount);
+
     store.dispatch(loadUser());
   }, []);
   return (

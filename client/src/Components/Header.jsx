@@ -56,6 +56,11 @@ const Header = () => {
                     Dashboard
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <a className="nav-link">
+                    Visitor Count: {localStorage.getItem("visitorCount") || 0}
+                  </a>
+                </li>
               </ul>
             </span>
           </div>

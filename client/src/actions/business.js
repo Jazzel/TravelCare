@@ -18,6 +18,8 @@ export const getBusinesses = () => async (dispatch) => {
       type: GET_BUSINESSES,
       payload: res.data,
     });
+
+    return res.data;
   } catch (err) {
     dispatch({
       type: BUSINESS_ERROR,

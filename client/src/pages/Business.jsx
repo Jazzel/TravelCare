@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Components/Header";
 import { getBusinesses } from "../actions/business";
 import { addToCart } from "../actions/cart";
@@ -13,6 +13,53 @@ const Business = ({
   useEffect(() => {
     getBusinesses();
   }, [getBusinesses]);
+
+  const [sortBy, setSortBy] = useState("price:high-to-low");
+
+  const [btnClasses, setBtnClasses] = useState([
+    "btn-dark",
+    "btn-outline-dark",
+    "btn-outline-dark",
+    "btn-outline-dark",
+  ]);
+
+  const onClickHandler = (filter) => {
+    setSortBy(filter);
+
+    if (filter === "price:high-to-low") {
+      setBtnClasses([
+        "btn-dark",
+        "btn-outline-dark",
+        "btn-outline-dark",
+        "btn-outline-dark",
+      ]);
+    }
+    if (filter === "price:low-to-high") {
+      setBtnClasses([
+        "btn-outline-dark",
+        "btn-dark",
+        "btn-outline-dark",
+        "btn-outline-dark",
+      ]);
+    }
+    if (filter === "alpha:a-to-z") {
+      setBtnClasses([
+        "btn-outline-dark",
+        "btn-outline-dark",
+        "btn-dark",
+        "btn-outline-dark",
+      ]);
+    }
+    if (filter === "alpha:z-to-a") {
+      setBtnClasses([
+        "btn-outline-dark",
+        "btn-outline-dark",
+        "btn-outline-dark",
+        "btn-dark",
+      ]);
+    }
+  };
+
   return (
     <>
       <div className="bg-dark">
@@ -41,8 +88,61 @@ const Business = ({
       </div>
       <section className="container pl-5 pt-5 pr-5">
         <div className="row">
+          <button
+            type="button"
+            name=""
+            id=""
+            className={`btn w-25 ${btnClasses[0]} btn-lg btn-block`}
+            style={{ borderRadius: "0px" }}
+            onClick={() => onClickHandler("price:high-to-low")}
+          >
+            Price: High to Low
+          </button>
+          <button
+            type="button"
+            name=""
+            id=""
+            className={`btn w-25 ${btnClasses[1]} btn-lg btn-block`}
+            style={{ borderRadius: "0px" }}
+            onClick={() => onClickHandler("price:low-to-high")}
+          >
+            Price: Low to High
+          </button>
+          <button
+            type="button"
+            name=""
+            id=""
+            className={`btn w-25 ${btnClasses[2]} btn-lg btn-block`}
+            style={{ borderRadius: "0px" }}
+            onClick={() => onClickHandler("alpha:a-to-z")}
+          >
+            Alpha: A to Z
+          </button>
+          <button
+            type="button"
+            name=""
+            id=""
+            className={`btn w-25 ${btnClasses[3]} btn-lg btn-block`}
+            style={{ borderRadius: "0px" }}
+            onClick={() => onClickHandler("alpha:z-to-a")}
+          >
+            Alpha: Z to A
+          </button>
+        </div>
+      </section>
+      <section className="container pl-5 pt-5 pr-5">
+        <div className="row">
           {!loading && businesses && businesses.length > 0 ? (
-            businesses.map(
+            (sortBy === "price:high-to-low"
+              ? businesses.sort((a, b) => b.price - a.price)
+              : sortBy === "price:low-to-high"
+              ? businesses.sort((a, b) => a.price - b.price)
+              : sortBy === "alpha:a-to-z"
+              ? businesses.sort((a, b) => a.name.localeCompare(b.name))
+              : sortBy === "alpha:z-to-a"
+              ? businesses.sort((a, b) => b.name.localeCompare(a.name))
+              : businesses
+            ).map(
               ({
                 _id,
                 name,
@@ -84,6 +184,8 @@ const Business = ({
                           price,
                           updatedAt,
                         };
+
+                        alert("Service added to cart !");
 
                         addToCart(product);
                       }}
