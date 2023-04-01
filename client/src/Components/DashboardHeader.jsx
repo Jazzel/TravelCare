@@ -33,6 +33,11 @@ const DashboardHeader = ({ auth: { user, role }, logout }) => {
                 </Link>
               </li>
               <li className="nav-item">
+                <Link className="nav-link" to="/tourists">
+                  Tourists
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link className="nav-link" aria-current="page" to="/">
                   Go back to site
                 </Link>

@@ -33,6 +33,7 @@ import Cart from "./pages/Cart";
 import Discounts from "./pages/Discounts";
 import AddDiscount from "./pages/AddDiscount";
 import EditDiscount from "./pages/EditDiscount";
+import Tourists from "./pages/Tourists";
 
 export const HOST = "http://localhost:5000";
 
@@ -134,6 +135,14 @@ const App = () => {
                 element={
                   <PrivateRoute>
                     <EditDiscount />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="tourists"
+                element={
+                  <PrivateRoute>
+                    <Tourists />
                   </PrivateRoute>
                 }
               />
