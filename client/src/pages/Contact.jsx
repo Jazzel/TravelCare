@@ -1,8 +1,41 @@
 import React from "react";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
+import { setAlert } from "../actions/alert";
+import { connect } from "react-redux";
 
-const Contact = () => {
+import { addContact } from "../actions/contacts";
+import Alert from "../Components/Alert";
+
+const Contact = ({ addContact, setAlert }) => {
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [description, setDescription] = React.useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = {
+      name,
+      email,
+      description,
+    };
+
+    console.log(formData);
+
+    if (name !== "" && email !== "" && description !== "") {
+      const response = addContact(formData);
+
+      setAlert("Message sent successfully", "success");
+
+      setName("");
+      setEmail("");
+      setDescription("");
+    } else {
+      setAlert("Please fill all the fields", "danger");
+    }
+  };
+
   return (
     <div>
       <div className="bg-dark">
@@ -67,14 +100,8 @@ const Contact = () => {
               </div>
             </div>
             <div className="col-md-6">
-              <form
-                className="pt-5"
-                onSubmit={() =>
-                  alert(
-                    "Thankyou for submitting the contact form. Our marketing team will reach out to you soon !"
-                  )
-                }
-              >
+              <Alert />
+              <form className="pt-5" onSubmit={handleSubmit}>
                 <div className="form-group mt-5">
                   <label for="email">Email address</label>
                   <input
@@ -82,6 +109,8 @@ const Contact = () => {
                     required
                     className="form-control mt-2"
                     id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     aria-describedby="email"
                     placeholder="Enter email"
                   />
@@ -96,6 +125,8 @@ const Contact = () => {
                     required
                     className="form-control"
                     id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     placeholder="Enter Name"
                   />
                 </div>
@@ -106,6 +137,8 @@ const Contact = () => {
                     required
                     id="message"
                     rows="3"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                   ></textarea>
                 </div>
                 <button type="submit" className="btn btn-dark mt-3 w-100">
@@ -125,4 +158,6 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+const mapStateToProps = () => ({});
+
+export default connect(mapStateToProps, { setAlert, addContact })(Contact);

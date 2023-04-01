@@ -48,3 +48,7 @@ export const UPDATE_DISCOUNT = "UPDATE_DISCOUNT";
 export const GET_DISCOUNTS = "GET_DISCOUNTS";
 export const GET_DISCOUNT = "GET_DISCOUNT";
 export const DISCOUNT_ERROR = "DISCOUNT_ERROR";
+
+export const GET_CONTACTS = "GET_CONTACTS";
+export const CONTACT_ERROR = "CONTACT_ERROR";
+export const ADD_CONTACT = "ADD_CONTACT";
