@@ -63,6 +63,7 @@ const Dashboard = ({
                   <th>Username</th>
                   <th>Role</th>
                   <th>Status</th>
+                  <th>Discount</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -141,12 +142,9 @@ const Dashboard = ({
                     {username} @{businessname}
                   </td>
                   <td>
-                    <button
-                      className="btn btn-dark"
-                      onClick={() => navigate(`/business/${_id}`)}
-                    >
+                    <a className="btn btn-dark" href={`/business/${_id}`}>
                       View
-                    </button>{" "}
+                    </a>{" "}
                     |{" "}
                     <button
                       className="btn btn-primary"
@@ -175,12 +173,9 @@ const Dashboard = ({
                     </td>
 
                     <td>
-                      <button
-                        className="btn btn-dark"
-                        onClick={() => navigate(`/business/${_id}`)}
-                      >
+                      <a className="btn btn-dark" href={`/business/${_id}`}>
                         View
-                      </button>{" "}
+                      </a>{" "}
                       |{" "}
                       <button
                         className="btn btn-primary"
@@ -208,12 +203,9 @@ const Dashboard = ({
                       {username} @{businessname}{" "}
                     </td>
                     <td>
-                      <button
-                        className="btn btn-dark"
-                        onClick={() => navigate(`/business/${_id}`)}
-                      >
+                      <a className="btn btn-dark" href={`/business/${_id}`}>
                         View
-                      </button>{" "}
+                      </a>{" "}
                     </td>
                   </tr>
                 ))

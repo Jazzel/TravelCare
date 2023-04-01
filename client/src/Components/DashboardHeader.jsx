@@ -28,6 +28,11 @@ const DashboardHeader = ({ auth: { user, role }, logout }) => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
+                <Link className="nav-link" to="/discounts">
+                  Discounts
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link className="nav-link" aria-current="page" to="/">
                   Go back to site
                 </Link>
@@ -46,11 +51,6 @@ const DashboardHeader = ({ auth: { user, role }, logout }) => {
                   </a>
                 </li>
               )}
-              <li className="nav-item">
-                <Link className="nav-link" to="/messages">
-                  Messages
-                </Link>
-              </li>
             </ul>
             <span className="navbar-text">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">

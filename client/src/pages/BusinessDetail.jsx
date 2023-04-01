@@ -4,17 +4,34 @@ import { useParams } from "react-router-dom";
 import { getBusiness } from "../actions/business";
 import DashboardHeader from "../Components/DashboardHeader";
 import Footer from "../Components/Footer";
+import { getDiscount } from "../actions/discounts";
 
-const BusinessDetail = ({ business: { loading, business }, getBusiness }) => {
+const BusinessDetail = ({
+  business: { loading, business },
+  getBusiness,
+  getDiscount,
+  discount: { discount },
+}) => {
   const { id } = useParams();
+
+  let discountPercentage = 0;
 
   useEffect(() => {
     const fetchBusiness = async () => {
       const business = await getBusiness(id);
+
+      if (business && business.discount !== "No Discount") {
+        const discount = await getDiscount(business.discount);
+        console.log(business.discount, discount);
+      }
     };
 
     fetchBusiness();
-  }, [getBusiness, id]);
+  }, [getBusiness, id, getDiscount]);
+
+  if (business && business.discount) {
+    discountPercentage = discount?.percentage;
+  }
   return (
     <div>
       <DashboardHeader />
@@ -31,7 +48,23 @@ const BusinessDetail = ({ business: { loading, business }, getBusiness }) => {
               </h3>
               <br />
               <p>{business?.description}</p>
-              <p>Price: {business?.price} $</p>
+              <p>
+                Price:{" "}
+                <span
+                  style={{
+                    textDecoration:
+                      business?.discountPecentage > 0 && "line-through",
+                  }}
+                >
+                  {business?.price} $
+                </span>{" "}
+                <span style={{ color: "red", fontWeight: "bold" }}>
+                  {business?.discountPecentage > 0 &&
+                    business.price -
+                      (discount[0]?.percentage * business?.price) / 100 +
+                      " $"}
+                </span>
+              </p>
               <p>
                 Added By: {business?.username} <br />
                 Contact Number: {business?.phone} <br />
@@ -53,6 +86,9 @@ const BusinessDetail = ({ business: { loading, business }, getBusiness }) => {
 
 const mapStateToProps = (state) => ({
   business: state.business,
+  discount: state.discount,
 });
 
-export default connect(mapStateToProps, { getBusiness })(BusinessDetail);
+export default connect(mapStateToProps, { getBusiness, getDiscount })(
+  BusinessDetail
+);

@@ -4,11 +4,13 @@ import { getBusinesses } from "../actions/business";
 import { addToCart } from "../actions/cart";
 import { connect } from "react-redux";
 import Footer from "../Components/Footer";
+import { getDiscount } from "../actions/discounts";
 
 const Business = ({
   business: { loading, businesses },
   getBusinesses,
   addToCart,
+  getDiscount,
 }) => {
   useEffect(() => {
     getBusinesses();
@@ -153,6 +155,9 @@ const Business = ({
                 phone,
                 address,
                 updatedAt,
+                email,
+                discountPecentage,
+                discount,
               }) => (
                 <div className="card mt-3 shadow">
                   <div className="card-body p-5">
@@ -162,11 +167,33 @@ const Business = ({
                     </h3>
                     <br />
                     <p>{description}</p>
-                    <p>Price: {price} $</p>
+                    <p>
+                      Price:{" "}
+                      <span
+                        style={{
+                          textDecoration:
+                            discount &&
+                            discount !== "No Discount" &&
+                            discountPecentage > 0 &&
+                            "line-through",
+                        }}
+                      >
+                        {price} $
+                      </span>{" "}
+                      {discount &&
+                        discount !== "No Discount" &&
+                        discountPecentage > 0 && (
+                          <span style={{ color: "red", fontWeight: "bold" }}>
+                            {discount &&
+                              price - (discountPecentage * price) / 100 + " $"}
+                          </span>
+                        )}
+                    </p>
                     <br />
                     <p>
                       Added By: {username} <br />
                       Contact Number: {phone} <br />
+                      Contact Email: {email} <br />
                       Address: {address} <br />
                       Last updated: {new Date(`${updatedAt}`).toLocaleString()}
                     </p>
@@ -216,4 +243,8 @@ const mapStateToProps = (state) => ({
   business: state.business,
 });
 
-export default connect(mapStateToProps, { getBusinesses, addToCart })(Business);
+export default connect(mapStateToProps, {
+  getBusinesses,
+  getDiscount,
+  addToCart,
+})(Business);

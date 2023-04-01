@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Create Schema
-const BusinessSchema = new Schema(
+const DiscountSchema = new Schema(
   {
     name: {
       type: String,
       required: true,
     },
-    price: {
+    percentage: {
       type: Number,
       required: true,
     },
@@ -20,12 +20,17 @@ const BusinessSchema = new Schema(
       type: String,
       required: true,
     },
-    discount: {
-      type: String,
+    startsFrom: {
+      type: Date,
       required: true,
+    },
+    endsAt: {
+      type: Date,
+      required: true,
+      default: null,
     },
   },
   { timestamps: true }
 );
 
-module.exports = Business = mongoose.model("business", BusinessSchema);
+module.exports = Discount = mongoose.model("discount", DiscountSchema);

@@ -29,8 +29,10 @@ import BusinessDetail from "./pages/BusinessDetail";
 import Business from "./pages/Business";
 import AdminRoute from "./routing/AdminRoute";
 import UserDashboard from "./pages/UserDashboard";
-import Messages from "./pages/Messages";
 import Cart from "./pages/Cart";
+import Discounts from "./pages/Discounts";
+import AddDiscount from "./pages/AddDiscount";
+import EditDiscount from "./pages/EditDiscount";
 
 export const HOST = "http://localhost:5000";
 
@@ -112,10 +114,26 @@ const App = () => {
                 }
               />
               <Route
-                path="messages"
+                path="discounts"
                 element={
                   <PrivateRoute>
-                    <Messages />
+                    <Discounts />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="add-discount"
+                element={
+                  <PrivateRoute>
+                    <AddDiscount />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="edit-discount/:id"
+                element={
+                  <PrivateRoute>
+                    <EditDiscount />
                   </PrivateRoute>
                 }
               />

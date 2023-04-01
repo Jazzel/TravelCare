@@ -7,16 +7,37 @@ import Alert from "../Components/Alert";
 import DashboardHeader from "../Components/DashboardHeader";
 import Footer from "../Components/Footer";
 
-const AddBusiness = ({ addBusiness, setAlert, auth: { user } }) => {
+import { getDiscounts } from "../actions/discounts";
+
+const AddBusiness = ({
+  addBusiness,
+  setAlert,
+  auth: { user },
+  discount: { loading, discounts },
+  getDiscounts,
+}) => {
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [price, setPrice] = React.useState("");
+  const [discount, setDiscount] = React.useState("None");
+
+  React.useEffect(() => {
+    getDiscounts();
+  }, [getDiscounts]);
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (name !== "" && description !== "" && price > 0) {
-      const formData = { name, description, addedBy: user?._id, price };
+      const formData = {
+        name,
+        description,
+        addedBy: user?._id,
+        price,
+        discount,
+      };
+
+      console.log(formData);
 
       const response = await addBusiness(formData);
       if (response.status === 200) {
@@ -81,6 +102,23 @@ const AddBusiness = ({ addBusiness, setAlert, auth: { user } }) => {
             </small>
           </div>
           <div class="form-group w-50 mt-4">
+            <label for="">Discount:</label>
+            <select
+              className="form-control"
+              onChange={(e) => setDiscount(e.target.value)}
+            >
+              <option value={"None"}>No Discount</option>
+              {!loading &&
+                discounts &&
+                discounts.map((discount) => (
+                  <option value={discount._id}>{discount.name}</option>
+                ))}
+            </select>
+            <small id="helpId" class="form-text text-muted">
+              Discounts to add on this service.
+            </small>
+          </div>
+          <div class="form-group w-50 mt-4">
             <button className="btn btn-primary w-100" type="submit">
               Add Service
             </button>
@@ -97,6 +135,11 @@ const AddBusiness = ({ addBusiness, setAlert, auth: { user } }) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  discount: state.discount,
 });
 
-export default connect(mapStateToProps, { addBusiness, setAlert })(AddBusiness);
+export default connect(mapStateToProps, {
+  addBusiness,
+  getDiscounts,
+  setAlert,
+})(AddBusiness);

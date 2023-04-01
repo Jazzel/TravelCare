@@ -4,8 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { getBusinesses } from "../actions/business";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
+import { getDiscounts } from "../actions/discounts";
 
-const Home = ({ business: { loading, businesses }, getBusinesses }) => {
+const Home = ({
+  business: { loading, businesses },
+  getDiscounts,
+  getBusinesses,
+  discount: { discounts },
+}) => {
   const navigate = useNavigate();
 
   const testimonials = [
@@ -38,7 +44,8 @@ const Home = ({ business: { loading, businesses }, getBusinesses }) => {
 
   useEffect(() => {
     getBusinesses();
-  }, [getBusinesses]);
+    getDiscounts();
+  }, [getBusinesses, getDiscounts]);
 
   return (
     <>
@@ -96,6 +103,44 @@ const Home = ({ business: { loading, businesses }, getBusinesses }) => {
           numquam sunt. Aliquam quam voluptatem enim ex expedita quaerat quis
           est id unde autem asperiores ratione, nulla eos itaque perspiciatis.
         </p>
+      </section>
+      <section className="container pl-5 pt-5 pr-5">
+        <h2
+          style={{
+            textAlign: "center",
+            textTransform: "uppercase",
+            letterSpacing: "5px",
+            fontWeight: "600",
+          }}
+        >
+          Discounts
+        </h2>
+        <br />
+        <div className="row">
+          {discounts &&
+            discounts.length > 0 &&
+            discounts.map((discount) => (
+              <div className="col-4">
+                <div className="card text-left">
+                  <div className="card-body p-5">
+                    <div className="styled-back">@</div>
+
+                    <h4 className="card-title">{discount?.name}</h4>
+                    <p className="card-text">
+                      Percentage: {discount?.percentage} %
+                    </p>
+                    <p className="card-text">{discount?.description}</p>
+                    <p className="card-text">
+                      Description: {discount?.description}
+                    </p>
+                    <p className="card-text">
+                      Ends at: {new Date(discount?.endsAt).toDateString()}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
       </section>
       <div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -160,6 +205,7 @@ const Home = ({ business: { loading, businesses }, getBusinesses }) => {
                   username,
                   phone,
                   address,
+                  email,
                   updatedAt,
                 }) => (
                   <div className="col-12 col-md-6">
@@ -174,6 +220,7 @@ const Home = ({ business: { loading, businesses }, getBusinesses }) => {
                         <p>
                           Added By: {username} <br />
                           Contact Number: {phone} <br />
+                          Contact Email: {email} <br />
                           Address: {address} <br />
                           Last updated:{" "}
                           {new Date(`${updatedAt}`).toLocaleString()}
@@ -275,6 +322,7 @@ const Home = ({ business: { loading, businesses }, getBusinesses }) => {
 
 const mapStateToProps = (state) => ({
   business: state.business,
+  discount: state.discount,
 });
 
-export default connect(mapStateToProps, { getBusinesses })(Home);
+export default connect(mapStateToProps, { getBusinesses, getDiscounts })(Home);

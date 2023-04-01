@@ -41,3 +41,10 @@ export const CLEAR_CART = "CLEAR_CART";
 export const CART_ERROR = "CART_ERROR";
 export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART";
 export const ADD_ONE_TO_CART = "ADD_ONE_TO_CART";
+
+export const ADD_DISCOUNT = "ADD_DISCOUNT";
+export const REMOVE_DISCOUNT = "REMOVE_DISCOUNT";
+export const UPDATE_DISCOUNT = "UPDATE_DISCOUNT";
+export const GET_DISCOUNTS = "GET_DISCOUNTS";
+export const GET_DISCOUNT = "GET_DISCOUNT";
+export const DISCOUNT_ERROR = "DISCOUNT_ERROR";

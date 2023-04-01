@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const Business = require("../../models/Business");
+const Discount = require("../../models/Discount");
 
 router.post(
   "/",
@@ -10,6 +11,7 @@ router.post(
     check("price", "Price is required").not().isEmpty(),
     check("description", "Description is required").not().isEmpty(),
     check("addedBy", "Added By is required").not().isEmpty(),
+    check("discount", "Discount is required").not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -17,13 +19,14 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
 
     try {
-      const { name, description, addedBy, price } = req.body;
+      const { name, description, addedBy, price, discount } = req.body;
 
       let business = new Business({
         name,
         description,
         addedBy,
         price,
+        discount,
       });
 
       business.save();
@@ -41,7 +44,7 @@ router.put("/:id", [], async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
 
   try {
-    const { name, description, addedBy, price } = req.body;
+    const { name, description, price, discount } = req.body;
 
     const { id } = req.params;
     const business = await Business.findById(id);
@@ -53,6 +56,7 @@ router.put("/:id", [], async (req, res) => {
     business.name = name || business.name;
     business.description = description || business.description;
     business.price = price || business.price;
+    business.discount = discount || business.discount;
 
     business.save();
     return res.status(200).send(business);
@@ -103,6 +107,18 @@ router.get("/", async (req, res) => {
           "phone",
           "-_id",
         ]);
+
+        let discountPecentage = 0;
+        if (business.discount && business.discount !== "No Discount") {
+          const discount = await Discount.findById(business.discount);
+
+          if (discount) {
+            if (discount.endsAt > Date.now()) {
+              discountPecentage = discount.percentage;
+            }
+          }
+        }
+
         if (userData) {
           const user = {
             username: userData.name,
@@ -111,7 +127,7 @@ router.get("/", async (req, res) => {
             address: userData.address,
             phone: userData.phone,
           };
-          data = [{ ...business["_doc"], ...user }, ...data];
+          data = [{ ...business["_doc"], ...user, discountPecentage }, ...data];
         }
       }
     }
@@ -137,6 +153,17 @@ router.get("/:id", [], async (req, res) => {
       return res.status(401).send("Business not found !");
     }
 
+    let discountPecentage = 0;
+    if (business.discount && business.discount !== "No Discount") {
+      const discount = await Discount.findById(business.discount);
+
+      if (discount) {
+        if (discount.endsAt > Date.now()) {
+          discountPecentage = discount.percentage;
+        }
+      }
+    }
+
     const userData = await User.findById(business.addedBy).select([
       "name",
       "email",
@@ -154,7 +181,9 @@ router.get("/:id", [], async (req, res) => {
       phone: userData["_doc"].phone,
     };
 
-    return res.status(200).json({ ...business["_doc"], ...user });
+    return res
+      .status(200)
+      .json({ ...business["_doc"], ...user, discountPecentage });
   } catch (error) {
     console.error(error.message);
     return res.status(500).send("Server error");

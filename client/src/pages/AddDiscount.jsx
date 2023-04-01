@@ -1,61 +1,44 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setAlert } from "../actions/alert";
-import { editBusiness, getBusiness } from "../actions/business";
+import { addDiscount } from "../actions/discounts";
 import Alert from "../Components/Alert";
 import DashboardHeader from "../Components/DashboardHeader";
 import Footer from "../Components/Footer";
 
-import { getDiscounts } from "../actions/discounts";
-
-const UpdateBusiness = ({
-  editBusiness,
-  getBusiness,
-  setAlert,
-  discount: { loading, discounts },
-  getDiscounts,
-  auth: { user },
-}) => {
+const AddDiscount = ({ addDiscount, setAlert, auth: { user } }) => {
   const [name, setName] = React.useState("");
+  const [percentage, setPercentage] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const [price, setPrice] = React.useState("");
-  const [discount, setDiscount] = React.useState("None");
-
-  const { id } = useParams();
-
-  useEffect(() => {
-    const fetchBusiness = async () => {
-      const business = await getBusiness(id);
-      setName(business.name);
-      setDescription(business.description);
-      setPrice(business.price);
-      setDiscount(business.discount || "None");
-    };
-
-    getDiscounts();
-
-    fetchBusiness();
-  }, [getBusiness, id, getDiscounts]);
+  const [startsFrom, setStartsFrom] = React.useState("");
+  const [endsAt, setEndsAt] = React.useState("");
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (name !== "" && description !== "") {
+    if (
+      name !== "" &&
+      description !== "" &&
+      percentage > 0 &&
+      startsFrom !== "" &&
+      endsAt !== ""
+    ) {
       const formData = {
         name,
         description,
-        addedBy: user?.name,
-        price,
-        discount,
+        addedBy: user?._id,
+        percentage,
+        startsFrom,
+        endsAt,
       };
 
-      const response = await editBusiness(formData, id);
+      const response = await addDiscount(formData);
       if (response.status === 200) {
-        navigate("/dashboard");
+        navigate("/discounts");
       }
     } else {
-      setAlert("Name, price and description all are required", "danger");
+      setAlert("Please fill in all the fields", "danger");
     }
   };
 
@@ -65,10 +48,10 @@ const UpdateBusiness = ({
 
       <div className="container p-5">
         <form onSubmit={handleSubmit}>
-          <h1>Update Business</h1>
+          <h1>Add Service</h1>
           <br />
-          <Alert />
 
+          <Alert />
           <div class="form-group w-50">
             <label for="">Name:</label>
             <input
@@ -80,22 +63,21 @@ const UpdateBusiness = ({
               onChange={(e) => setName(e.target.value)}
             />
             <small id="helpId" class="form-text text-muted">
-              Name of the service.
+              Name of the discount.
             </small>
           </div>
-
           <div class="form-group w-50 mt-4">
-            <label for="">Price:</label>
+            <label for="">Percentage:</label>
             <input
-              type="text"
+              type="number"
               class="form-control"
               aria-describedby="helpId"
               placeholder=""
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              value={percentage}
+              onChange={(e) => setPercentage(e.target.value)}
             />
             <small id="helpId" class="form-text text-muted">
-              Price for the service.
+              Percentage for the discount.
             </small>
           </div>
           <div class="form-group w-50 mt-4">
@@ -110,29 +92,42 @@ const UpdateBusiness = ({
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
             <small id="helpId" class="form-text text-muted">
-              Brief description of your business.
+              Brief description of your service.
             </small>
           </div>
           <div class="form-group w-50 mt-4">
-            <label for="">Discount:</label>
-            <select
-              className="form-control"
-              onChange={(e) => setDiscount(e.target.value)}
-            >
-              <option value={null}>No Discount</option>
-              {discounts.map((dis) => (
-                <option value={dis._id} selected={discount === dis._id}>
-                  {dis.name}
-                </option>
-              ))}
-            </select>
+            <label for="">Starts From:</label>
+            <input
+              type="date"
+              class="form-control"
+              rows={5}
+              aria-describedby="helpId"
+              placeholder=""
+              value={startsFrom}
+              onChange={(e) => setStartsFrom(e.target.value)}
+            />
             <small id="helpId" class="form-text text-muted">
-              Discounts to add on this service.
+              When will the discount start.
+            </small>
+          </div>
+          <div class="form-group w-50 mt-4">
+            <label for="">Ends At:</label>
+            <input
+              type="date"
+              class="form-control"
+              rows={5}
+              aria-describedby="helpId"
+              placeholder=""
+              value={endsAt}
+              onChange={(e) => setEndsAt(e.target.value)}
+            />
+            <small id="helpId" class="form-text text-muted">
+              When will the discount end.
             </small>
           </div>
           <div class="form-group w-50 mt-4">
             <button className="btn btn-primary w-100" type="submit">
-              Update Business
+              Add Discount
             </button>
           </div>
         </form>
@@ -147,12 +142,6 @@ const UpdateBusiness = ({
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  discount: state.discount,
 });
 
-export default connect(mapStateToProps, {
-  editBusiness,
-  setAlert,
-  getBusiness,
-  getDiscounts,
-})(UpdateBusiness);
+export default connect(mapStateToProps, { addDiscount, setAlert })(AddDiscount);
