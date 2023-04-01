@@ -1,8 +1,11 @@
 const express = require("express");
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
+const config = require("config");
 
 const Contact = require("../../models/Contact");
+
+const nodemailer = require("nodemailer");
 
 router.post(
   "/",
@@ -25,10 +28,38 @@ router.post(
         description,
       });
 
+      let transport = nodemailer.createTransport({
+        service: "gmail",
+        port: 465,
+        secure: true,
+        secureConnection: false,
+        auth: {
+          user: config.get("user"),
+          pass: config.get("pass"),
+        },
+        tls: {
+          rejectUnAuthorized: true,
+        },
+      });
+
+      const mailOptions = {
+        from: `${config.get("user")}`,
+        to: email,
+        subject: "Message From Travel Care",
+        html: `<h1>Contact Details</h1>
+            <h2>Welcome ${name} to TravelCare</h2>
+            <p>Thank you for messaging our team. Someone from our team will reach out to you soon.</p>
+            <br/>
+            </div>`,
+      };
+
+      let info = await transport.sendMail(mailOptions);
+
       contact.save();
+
       return res.status(200).send("Contact Created !");
     } catch (error) {
-      console.error(err.message);
+      console.error(error.message);
       return res.status(500).send("Server error");
     }
   }

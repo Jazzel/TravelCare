@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-const Header = () => {
+const Header = ({ auth: { role } }) => {
   return (
     <header className="container">
       <nav className="navbar navbar-expand-lg bg-transparent navbar-dark">
@@ -56,11 +57,13 @@ const Header = () => {
                     Dashboard
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link">
-                    Visitor Count: {localStorage.getItem("visitorCount") || 0}
-                  </a>
-                </li>
+                {role !== "user" && (
+                  <li className="nav-item">
+                    <a className="nav-link">
+                      Visitor Count: {localStorage.getItem("visitorCount") || 0}
+                    </a>
+                  </li>
+                )}
               </ul>
             </span>
           </div>
@@ -70,4 +73,8 @@ const Header = () => {
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {})(Header);
