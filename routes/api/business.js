@@ -109,7 +109,11 @@ router.get("/", async (req, res) => {
         ]);
 
         let discountPecentage = 0;
-        if (business.discount && business.discount !== "No Discount") {
+        if (
+          business.discount &&
+          business.discount !== "No Discount" &&
+          business.discount !== "None"
+        ) {
           const discount = await Discount.findById(business.discount);
 
           if (discount) {
@@ -154,7 +158,11 @@ router.get("/:id", [], async (req, res) => {
     }
 
     let discountPecentage = 0;
-    if (business.discount && business.discount !== "No Discount") {
+    if (
+      business.discount &&
+      business.discount !== "No Discount" &&
+      business.discount !== "None"
+    ) {
       const discount = await Discount.findById(business.discount);
 
       if (discount) {
