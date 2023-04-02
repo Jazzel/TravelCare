@@ -11,6 +11,7 @@ const Contact = ({ addContact, setAlert }) => {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [description, setDescription] = React.useState("");
+  const [sender_Email, set_senderEmail] = React.useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,16 +19,17 @@ const Contact = ({ addContact, setAlert }) => {
     const formData = {
       name,
       email,
+      sender_Email,
       description,
     };
 
     console.log(formData);
 
-    if (name !== "" && email !== "" && description !== "") {
+    if (name !== "" && email !== "" && description !== "" && sender_Email !== "") {
       const response = addContact(formData);
 
       setAlert("Message sent successfully", "success");
-
+      set_senderEmail("");
       setName("");
       setEmail("");
       setDescription("");
@@ -102,8 +104,8 @@ const Contact = ({ addContact, setAlert }) => {
             <div className="col-md-6">
               <Alert />
               <form className="pt-5" onSubmit={handleSubmit}>
-                <div className="form-group mt-5">
-                  <label for="email">Email address</label>
+              <div className="form-group mt-5">
+                  <label for="email">Recipient Email address</label>
                   <input
                     type="email"
                     required
@@ -115,9 +117,27 @@ const Contact = ({ addContact, setAlert }) => {
                     placeholder="Enter email"
                   />
                   <small id="email" className="form-text text-muted">
+                    Write Email of a person who will recieve your message.
+                  </small>
+                </div>
+
+                <div className="form-group mt-5">
+                  <label for="email">Sender Email address</label>
+                  <input
+                    type="email"
+                    required
+                    className="form-control mt-2"
+                    id="email"
+                    value={sender_Email}
+                    onChange={(e) => set_senderEmail(e.target.value)}
+                    aria-describedby="email"
+                    placeholder="Enter email"
+                  />
+                  <small id="email" className="form-text text-muted">
                     We'll never share your email with anyone else.
                   </small>
                 </div>
+
                 <div className="form-group mt-2">
                   <label for="name">Name</label>
                   <input

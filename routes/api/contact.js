@@ -20,12 +20,14 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
 
     try {
-      const { name, email, description } = req.body;
+      const { name, email, description, sender_Email } = req.body;
 
       let contact = new Contact({
         name,
         email,
         description,
+        sender_Email,
+
       });
 
       let transport = nodemailer.createTransport({
@@ -47,7 +49,12 @@ router.post(
         to: email,
         subject: "Message From Travel Care",
         html: `<h1>Contact Details</h1>
-            <h2>Welcome ${name} to TravelCare</h2>
+            <h2>${name} has a message for you</h2>
+
+            <p> ${description} </p>
+            <br/>
+
+            <p> Sender's Email: ${sender_Email} </p>
             <p>Thank you for messaging our team. Someone from our team will reach out to you soon.</p>
             <br/>
             </div>`,
