@@ -117,7 +117,7 @@ const Home = ({
         </h2>
         <br />
         <div className="row">
-          {discounts &&
+          {/* {discounts &&
             discounts.length > 0 &&
             discounts.map((discount) => (
               <div className="col-4">
@@ -139,7 +139,71 @@ const Home = ({
                   </div>
                 </div>
               </div>
-            ))}
+            ))} */}
+          {!loading && businesses && businesses.length > 0 ? (
+            businesses
+              .slice(0, 4)
+              .filter((business) => business.discountPecentage > 0)
+              .map(
+                ({
+                  name,
+                  description,
+                  businessname,
+                  username,
+                  phone,
+                  address,
+                  price,
+                  discountPecentage,
+                  discount,
+                  email,
+                  updatedAt,
+                }) => (
+                  <div className="col-12 col-md-6">
+                    <div className="card mt-3 shadow">
+                      <div className="card-body p-5">
+                        <div className="styled-back">@</div>
+                        <h3>
+                          {name} by @{businessname}
+                        </h3>
+                        <br />
+                        <p>
+                          Price:{" "}
+                          <span
+                            style={{
+                              textDecoration:
+                                discountPecentage > 0 && "line-through",
+                            }}
+                          >
+                            {price} $
+                          </span>{" "}
+                          <span style={{ color: "red", fontWeight: "bold" }}>
+                            {discountPecentage > 0 &&
+                              price - (discountPecentage * price) / 100 + " $"}
+                          </span>
+                        </p>
+                        <p>{description}</p>
+                        <p>
+                          Added By: {username} <br />
+                          Contact Number: {phone} <br />
+                          Contact Email: {email} <br />
+                          Address: {address} <br />
+                          Last updated:{" "}
+                          {new Date(`${updatedAt}`).toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )
+              )
+          ) : (
+            <div className="card col text-left shadow">
+              <div className="card-body">
+                <p className="card-text text-center">
+                  No discounts are currently active !
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </section>
       <div>
