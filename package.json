@@ -2,8 +2,6 @@
   "name": "TravelCare",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:Jazzel/TravelCare.git",
-  "author": "Muhammad Jazzel Mehmood <jazzelmehmood4@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
