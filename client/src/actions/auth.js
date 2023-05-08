@@ -34,6 +34,21 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
+export const deleteAccountAndProfile = () => async (dispatch) => {
+  try {
+    await axios.delete(`${HOST}/api/users/me`);
+    dispatch({
+      type: CLEAR_PROFILE,
+    });
+    dispatch({
+      type: LOGOUT,
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // Register User
 export const register =
   ({ name, email, password, role, businessname, address, phone }) =>
@@ -114,6 +129,20 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
   });
+};
+
+export const updateProfile = (formData) => async (dispatch) => {
+  try {
+    const res = await axios.put(`${HOST}/api/users/me`, formData);
+    console.log(res);
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data,
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const sendEmailForVerification =

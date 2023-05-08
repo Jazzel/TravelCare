@@ -133,6 +133,47 @@ router.post(
   }
 );
 
+router.put("/me", auth, async (req, res) => {
+  try {
+    const { id, businessName, address, phonenumber } = req.body;
+
+    if (req.user.id !== id) {
+      return res.status(401).json({ msg: "User not authorized" });
+    }
+
+    const user = await User.findById(id);
+
+    if (!user) return res.status(400).json({ msg: "User not found" });
+
+    user.businessname = businessName;
+    user.address = address;
+    user.phone = phonenumber;
+
+    await user.save();
+
+    return res.status(200).json(user);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send("Server Error");
+  }
+});
+router.delete("/me", auth, async (req, res) => {
+  try {
+    const { id } = req.user;
+
+    if (req.user.id !== id) {
+      return res.status(401).json({ msg: "User not authorized" });
+    }
+
+    await User.findByIdAndRemove(id);
+
+    return res.status(200).json({ msg: "User deleted" });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send("Server Error");
+  }
+});
+
 router.get("/", auth, async (req, res) => {
   try {
     const user = await User.find().select(["-password", "-confirmationCode"]);

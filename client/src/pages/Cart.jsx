@@ -5,6 +5,7 @@ import Header from "../Components/Header";
 import {
   removeFromCart,
   decrementQuantity,
+  emptyCart,
   incrementQuantity,
 } from "../actions/cart";
 
@@ -16,7 +17,26 @@ const Cart = ({
   removeFromCart,
   decrementQuantity,
   incrementQuantity,
+  emptyCart,
 }) => {
+  const checkout = () => {
+    console.log("checkout");
+
+    let data = localStorage.getItem("history")
+      ? JSON.parse(localStorage.getItem("history"))
+      : [];
+
+    data = [...data, ...items];
+
+    console.log(data);
+
+    localStorage.setItem("history", JSON.stringify(data));
+
+    alert("Checkout successful");
+    localStorage.removeItem("cart");
+    emptyCart();
+  };
+
   return (
     <div>
       <div className="bg-dark">
@@ -201,6 +221,20 @@ const Cart = ({
               </div>
             </div>
           </div>
+          <div className="p-3 mt-3 w-100 ">
+            <div className=" w-100">
+              {items.length > 0 ? (
+                <div className="row shadow text-center">
+                  <button
+                    className="btn btn-large btn-success"
+                    onClick={checkout}
+                  >
+                    Checkout
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          </div>
         </div>
       </section>
       <br />
@@ -227,4 +261,5 @@ export default connect(mapStateToProps, {
   removeFromCart,
   decrementQuantity,
   incrementQuantity,
+  emptyCart,
 })(Cart);

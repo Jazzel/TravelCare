@@ -27,16 +27,21 @@ const DashboardHeader = ({ auth: { user, role }, logout }) => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link" to="/discounts">
-                  Discounts
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/tourists">
-                  Tourists
-                </Link>
-              </li>
+              {role === "business" ||
+                (role === "admin" && (
+                  <>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/discounts">
+                        Discounts
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/tourists">
+                        Tourists
+                      </Link>
+                    </li>
+                  </>
+                ))}
               <li className="nav-item">
                 <Link className="nav-link" aria-current="page" to="/">
                   Go back to site
@@ -50,10 +55,24 @@ const DashboardHeader = ({ auth: { user, role }, logout }) => {
                 </li>
               )}
               {role && (
+                <>
+                  <li className="nav-item">
+                    <a className="nav-link" href="#!">
+                      Role: <b>{role}</b>
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/myprofile">
+                      My Profile
+                    </Link>
+                  </li>
+                </>
+              )}
+              {role === "user" && (
                 <li className="nav-item">
-                  <a className="nav-link" href="#!">
-                    Role: <b>{role}</b>
-                  </a>
+                  <Link className="nav-link" to="/history">
+                    History
+                  </Link>
                 </li>
               )}
             </ul>

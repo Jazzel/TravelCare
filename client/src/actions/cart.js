@@ -25,6 +25,19 @@ export const addToCart = (data) => async (dispatch) => {
   }
 };
 
+export const emptyCart = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: CLEAR_CART,
+    });
+  } catch (err) {
+    dispatch({
+      type: CART_ERROR,
+      payload: { msg: "Failed to empty cart !" },
+    });
+  }
+};
+
 export const removeFromCart = (data) => async (dispatch) => {
   try {
     dispatch({

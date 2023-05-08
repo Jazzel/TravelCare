@@ -34,6 +34,8 @@ import Discounts from "./pages/Discounts";
 import AddDiscount from "./pages/AddDiscount";
 import EditDiscount from "./pages/EditDiscount";
 import Tourists from "./pages/Tourists";
+import MyProfile from "./pages/MyProfile";
+import History from "./pages/History";
 
 export const HOST = "http://localhost:5000";
 
@@ -154,6 +156,8 @@ const App = () => {
                   </PrivateRoute>
                 }
               />
+              <Route path="history" element={<History />} />
+              <Route path="myprofile" element={<MyProfile />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Route>
           </Routes>
