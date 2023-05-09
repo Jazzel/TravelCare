@@ -158,6 +158,7 @@ const Business = ({
                 email,
                 discountPecentage,
                 discount,
+                googleMapLink,
               }) => (
                 <div className="card mt-3 shadow">
                   <div className="card-body p-5">
@@ -195,6 +196,7 @@ const Business = ({
                       Contact Number: {phone} <br />
                       Contact Email: {email} <br />
                       Address: {address} <br />
+                      Google Maps: {googleMapLink || "None"} <br />
                       Last updated: {new Date(`${updatedAt}`).toLocaleString()}
                     </p>
                     <button

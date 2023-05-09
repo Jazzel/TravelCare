@@ -69,6 +69,7 @@ const BusinessDetail = ({
                 Added By: {business?.username} <br />
                 Contact Number: {business?.phone} <br />
                 Address: {business?.address} <br />
+                Google Maps: {business?.googleMapLink} <br />
                 Last updated:{" "}
                 {new Date(`${business?.updatedAt}`).toLocaleString()}
               </p>

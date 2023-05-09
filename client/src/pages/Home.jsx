@@ -55,7 +55,7 @@ const Home = ({
           className="container  mt-5"
           style={{ paddingLeft: "8%", paddingTop: "2%" }}
         >
-          <h1 className="text-light">About Us</h1>
+          <h1 className="text-light">Home</h1>
           <h6 className="text-light pt-3">
             <i>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
@@ -156,6 +156,7 @@ const Home = ({
                   discountPecentage,
                   discount,
                   email,
+                  googleMapLink,
                   updatedAt,
                 }) => (
                   <div className="col-12 col-md-6">
@@ -187,6 +188,7 @@ const Home = ({
                           Contact Number: {phone} <br />
                           Contact Email: {email} <br />
                           Address: {address} <br />
+                          Google Maps: {googleMapLink || "None"} <br />
                           Last updated:{" "}
                           {new Date(`${updatedAt}`).toLocaleString()}
                         </p>
@@ -271,6 +273,7 @@ const Home = ({
                   address,
                   email,
                   updatedAt,
+                  googleMapLink,
                 }) => (
                   <div className="col-12 col-md-6">
                     <div className="card mt-3 shadow">
@@ -286,6 +289,7 @@ const Home = ({
                           Contact Number: {phone} <br />
                           Contact Email: {email} <br />
                           Address: {address} <br />
+                          Google Maps: {googleMapLink || "None"} <br />
                           Last updated:{" "}
                           {new Date(`${updatedAt}`).toLocaleString()}
                         </p>

@@ -6,6 +6,33 @@ import { connect } from "react-redux";
 import Alert from "../Components/Alert";
 
 const Tourists = ({}) => {
+  const testimonials = [
+    {
+      name: "User Dave",
+      msg: "Loved the service, got my insurance in 5 minutes",
+      rating: 4,
+    },
+    {
+      name: "User Dennis",
+      msg: "Loved the service, got my insurance in 5 minutes",
+      rating: 5,
+    },
+    {
+      name: "User Sara",
+      msg: "Loved the service, got my insurance in 5 minutes",
+      rating: 2,
+    },
+    {
+      name: "User Jake",
+      msg: "Loved the service, got my insurance in 5 minutes",
+      rating: 3,
+    },
+    {
+      name: "User Paul",
+      msg: "Loved the service, got my insurance in 5 minutes",
+      rating: 4,
+    },
+  ];
   return (
     <div>
       <div className="bg-dark">
@@ -15,7 +42,7 @@ const Tourists = ({}) => {
           className="container  mt-5"
           style={{ paddingLeft: "8%", paddingTop: "2%" }}
         >
-          <h1 className="text-light">Tourists Us</h1>
+          <h1 className="text-light">About Us</h1>
           <h6 className="text-light pt-3">
             <i>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
@@ -34,6 +61,94 @@ const Tourists = ({}) => {
         </svg>
       </div>
       <section></section>
+      <section className="container pl-5 pt-5 pr-5">
+        <h2
+          style={{
+            textAlign: "center",
+            textTransform: "uppercase",
+            letterSpacing: "5px",
+            fontWeight: "600",
+          }}
+        >
+          What we do
+        </h2>
+        <p
+          className="pt-4"
+          style={{
+            textAlign: "center",
+          }}
+        >
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum nulla
+          numquam sunt. Aliquam quam voluptatem enim ex expedita quaerat quis
+          est id unde autem asperiores ratione, nulla eos itaque perspiciatis.
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum nulla
+          numquam sunt. Aliquam quam voluptatem enim ex expedita quaerat quis
+          est id unde autem asperiores ratione, nulla eos itaque perspiciatis.
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum nulla
+          numquam sunt. Aliquam quam voluptatem enim ex expedita quaerat quis
+          est id unde autem asperiores ratione, nulla eos itaque perspiciatis.
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum nulla
+          numquam sunt. Aliquam quam voluptatem enim ex expedita quaerat quis
+          est id unde autem asperiores ratione, nulla eos itaque perspiciatis.
+        </p>
+      </section>
+      <section className="container mb-5" style={{ marginTop: "100px" }}>
+        <h2
+          style={{
+            textAlign: "center",
+            textTransform: "uppercase",
+            letterSpacing: "5px",
+            fontWeight: "600",
+          }}
+        >
+          Testimonials
+        </h2>
+        <br />
+        <br />
+        <div className="row">
+          {testimonials.map(({ name, rating, msg }) => (
+            <div className="col-12 col-lg-4" key={name}>
+              <div className="card mt-3 shadow">
+                <div className="card-body">
+                  <div className="row">
+                    <div
+                      className="col-12 col-lg-2"
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        display: "flex",
+                      }}
+                    >
+                      <img
+                        src={require("./../assets/user.png")}
+                        width="100%"
+                        alt="User"
+                      />
+                    </div>
+                    <div className="col-12 col-lg-10">
+                      <p>
+                        <b>{name}</b>
+                      </p>
+                      <p>{msg}</p>
+                      <p>
+                        {rating &&
+                          [...Array(rating)].map((x, i) => (
+                            <img
+                              key={i}
+                              src={require("./../assets/star.png")}
+                              width="25px"
+                              alt="rating"
+                            />
+                          ))}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
       <br />
       <br />
       <br />
