@@ -19,6 +19,7 @@ const Cart = ({
   incrementQuantity,
   emptyCart,
 }) => {
+  console.log(items);
   const checkout = () => {
     console.log("checkout");
 
@@ -46,7 +47,7 @@ const Cart = ({
           className="container  mt-5"
           style={{ paddingLeft: "8%", paddingTop: "2%" }}
         >
-          <h1 className="text-light">About Us</h1>
+          <h1 className="text-light">Cart</h1>
           <h6 className="text-light pt-3">
             <i>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
@@ -130,7 +131,17 @@ const Cart = ({
                         alignItems: "center",
                       }}
                     >
-                      {service?.price} $
+                      {service?.discountPecentage > 0 ? (
+                        <div>
+                          {service?.price *
+                            (1 - service?.discountPecentage / 100).toFixed(
+                              2
+                            )}{" "}
+                          $
+                        </div>
+                      ) : (
+                        <div>{service?.price} $</div>
+                      )}
                     </div>
                     <div
                       className="col-2"

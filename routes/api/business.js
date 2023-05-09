@@ -19,7 +19,8 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
 
     try {
-      const { name, description, addedBy, price, discount } = req.body;
+      const { name, description, addedBy, price, discount, googleMapLink } =
+        req.body;
 
       let business = new Business({
         name,
@@ -27,6 +28,7 @@ router.post(
         addedBy,
         price,
         discount,
+        googleMapLink,
       });
 
       business.save();
@@ -44,7 +46,7 @@ router.put("/:id", [], async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
 
   try {
-    const { name, description, price, discount } = req.body;
+    const { name, description, price, discount, googleMapLink } = req.body;
 
     const { id } = req.params;
     const business = await Business.findById(id);
@@ -57,6 +59,7 @@ router.put("/:id", [], async (req, res) => {
     business.description = description || business.description;
     business.price = price || business.price;
     business.discount = discount || business.discount;
+    business.googleMapLink = googleMapLink || business.googleMapLink;
 
     business.save();
     return res.status(200).send(business);

@@ -26,7 +26,13 @@ export const cartTotal = (cart) => {
   let items = cart.reduce((total, product) => total + product.quantity, 0);
   let total = cart
     .reduce(
-      (total, product) => total + product.service.price * product.quantity,
+      (total, product) =>
+        total +
+        (product.service.discountPecentage > 0
+          ? product.service.price *
+            (1 - product.service.discountPecentage / 100).toFixed(2)
+          : product.service.price) *
+          product.quantity,
       0
     )
     .toFixed(2);

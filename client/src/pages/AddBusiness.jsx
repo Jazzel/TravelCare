@@ -20,6 +20,7 @@ const AddBusiness = ({
   const [description, setDescription] = React.useState("");
   const [price, setPrice] = React.useState("");
   const [discount, setDiscount] = React.useState("None");
+  const [googleMapLink, setGoogleMapLink] = React.useState("None");
 
   React.useEffect(() => {
     getDiscounts();
@@ -35,6 +36,7 @@ const AddBusiness = ({
         addedBy: user?._id,
         price,
         discount,
+        googleMapLink,
       };
 
       console.log(formData);
@@ -99,6 +101,20 @@ const AddBusiness = ({
             ></textarea>
             <small id="helpId" class="form-text text-muted">
               Brief description of your service.
+            </small>
+          </div>
+          <div class="form-group w-50 mt-4">
+            <label for="">Google Map Link:</label>
+            <input
+              type="number"
+              class="form-control"
+              aria-describedby="helpId"
+              placeholder=""
+              value={googleMapLink}
+              onChange={(e) => setGoogleMapLink(e.target.value)}
+            />
+            <small id="helpId" class="form-text text-muted">
+              Link for the location.
             </small>
           </div>
           <div class="form-group w-50 mt-4">

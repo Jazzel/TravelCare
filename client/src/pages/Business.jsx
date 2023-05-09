@@ -210,6 +210,8 @@ const Business = ({
                           address,
                           price,
                           updatedAt,
+                          discount,
+                          discountPecentage,
                         };
 
                         alert("Service added to cart !");

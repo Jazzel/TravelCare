@@ -21,6 +21,7 @@ const UpdateBusiness = ({
   const [description, setDescription] = React.useState("");
   const [price, setPrice] = React.useState("");
   const [discount, setDiscount] = React.useState("None");
+  const [googleMapLink, setGoogleMapLink] = React.useState("None");
 
   const { id } = useParams();
 
@@ -31,6 +32,7 @@ const UpdateBusiness = ({
       setDescription(business.description);
       setPrice(business.price);
       setDiscount(business.discount || "None");
+      setGoogleMapLink(business.googleMapLink || "None");
     };
 
     getDiscounts();
@@ -48,6 +50,7 @@ const UpdateBusiness = ({
         addedBy: user?.name,
         price,
         discount,
+        googleMapLink,
       };
 
       const response = await editBusiness(formData, id);
@@ -111,6 +114,20 @@ const UpdateBusiness = ({
             ></textarea>
             <small id="helpId" class="form-text text-muted">
               Brief description of your business.
+            </small>
+          </div>
+          <div class="form-group w-50 mt-4">
+            <label for="">Google Map Link:</label>
+            <input
+              type="text"
+              class="form-control"
+              aria-describedby="helpId"
+              placeholder=""
+              value={googleMapLink}
+              onChange={(e) => setGoogleMapLink(e.target.value)}
+            />
+            <small id="helpId" class="form-text text-muted">
+              Google Map Link of your business.
             </small>
           </div>
           <div class="form-group w-50 mt-4">

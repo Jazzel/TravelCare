@@ -24,6 +24,9 @@ const BusinessSchema = new Schema(
       type: String,
       required: true,
     },
+    googleMapLink: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

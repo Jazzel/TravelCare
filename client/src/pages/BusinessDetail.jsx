@@ -61,7 +61,7 @@ const BusinessDetail = ({
                 <span style={{ color: "red", fontWeight: "bold" }}>
                   {business?.discountPecentage > 0 &&
                     business.price -
-                      (discount[0]?.percentage * business?.price) / 100 +
+                      (business?.discountPecentage * business?.price) / 100 +
                       " $"}
                 </span>
               </p>
