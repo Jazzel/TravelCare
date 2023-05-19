@@ -45,10 +45,7 @@ const Tourists = ({}) => {
           <h1 className="text-light">About Us</h1>
           <h6 className="text-light pt-3">
             <i>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-              saepe sapiente architecto, et blanditiis aut facere repudiandae
-              esse! Illo ex voluptates laborum magnam voluptatibus libero autem.
-              Vitae, enim placeat. Molestias.
+              Our web application provides a comprehensive solution that maximizes marketing opportunities for local businesses, improves operational efficiency through valuable feedback, and fosters collaboration and growth within the industry. By removing barriers and promoting direct connections, we aim to bring the experience of tourism to new heights and contribute to the economic development of the entire state.
             </i>
           </h6>
         </div>
@@ -78,18 +75,18 @@ const Tourists = ({}) => {
             textAlign: "center",
           }}
         >
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum nulla
-          numquam sunt. Aliquam quam voluptatem enim ex expedita quaerat quis
-          est id unde autem asperiores ratione, nulla eos itaque perspiciatis.
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum nulla
-          numquam sunt. Aliquam quam voluptatem enim ex expedita quaerat quis
-          est id unde autem asperiores ratione, nulla eos itaque perspiciatis.
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum nulla
-          numquam sunt. Aliquam quam voluptatem enim ex expedita quaerat quis
-          est id unde autem asperiores ratione, nulla eos itaque perspiciatis.
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum nulla
-          numquam sunt. Aliquam quam voluptatem enim ex expedita quaerat quis
-          est id unde autem asperiores ratione, nulla eos itaque perspiciatis.
+        The SA Tourism Booster project aims to revolutionize the local tourism industry by providing a web application that connects business owners directly with tourists. By removing intermediaries, the project seeks to create a platform that empowers local businesses, maximizes their marketing efforts, improves operational efficiency through feedback, and facilitates valuable insights from competitors. This initiative not only benefits individual businesses but also contributes to the growth of the entire state's tourism sector.
+
+        The project's objective is to develop a dynamic website with multiple web pages by June 2023. This website will serve as a comprehensive solution to address the challenges faced by the tourism industry, particularly due to the Covid-19 pandemic and the eruption of the Ukraine war. The web application will fulfill the client's requirements by facilitating direct connections between business owners and tourists, fostering collaboration and growth opportunities for local businesses, and enabling them to promote offers and deals on their services.
+
+        To ensure the website's success, thorough testing will be conducted to confirm that it meets all client requirements and passes at least 90% of the test cases. Additionally, the project aims to optimize the website's performance by ensuring that the processing time to load web content and information is 4 seconds or less, providing visitors with a seamless and efficient user experience.
+
+        By achieving these goals, the SA Tourism Booster project will contribute to the revitalization of the local tourism industry, empower businesses, and bring the experience of tourism to new heights, ultimately benefiting both business owners and tourists alike.
+
+
+
+
+
         </p>
       </section>
       <section className="container mb-5" style={{ marginTop: "100px" }}>

@@ -16,28 +16,28 @@ const Home = ({
 
   const testimonials = [
     {
-      name: "User Dave",
-      msg: "Loved the service, got my insurance in 5 minutes",
+      name: "Tourists Dave (Local Operator)",
+      msg: "SA Tourism Booster connected me directly with tourists, boosting my business and increasing bookings. It's been a game-changer!",
       rating: 4,
     },
     {
-      name: "User Dennis",
-      msg: "Loved the service, got my insurance in 5 minutes",
+      name: "User Dennis (Hotel Owner)",
+      msg: "SA Tourism Booster made trip planning a breeze! I loved the direct communication with business owners and discovering unique experiences",
       rating: 5,
     },
     {
-      name: "User Sara",
-      msg: "Loved the service, got my insurance in 5 minutes",
-      rating: 2,
+      name: "User Sara (Adventurous Traveler)",
+      msg: "SA Tourism Booster made trip planning a breeze! I loved the direct communication with business owners and discovering unique experiences.",
+      rating: 5,
     },
     {
-      name: "User Jake",
-      msg: "Loved the service, got my insurance in 5 minutes",
+      name: "User Jake (Restaurant Owner)",
+      msg: "SA Tourism Booster helped my business grow by maximizing marketing and improving efficiency through valuable feedback",
       rating: 3,
     },
     {
-      name: "User Paul",
-      msg: "Loved the service, got my insurance in 5 minutes",
+      name: "User Paul (Travel Enthusiast)" ,
+      msg: "I found better options for exploring through SA Tourism Booster, supporting local businesses and boosting the tourism industry",
       rating: 4,
     },
   ];
@@ -58,10 +58,7 @@ const Home = ({
           <h1 className="text-light">Home</h1>
           <h6 className="text-light pt-3">
             <i>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-              saepe sapiente architecto, et blanditiis aut facere repudiandae
-              esse! Illo ex voluptates laborum magnam voluptatibus libero autem.
-              Vitae, enim placeat. Molestias.
+              At SA Tourism Booster, we are passionate about revolutionizing the local tourism industry. Our mission is to connect business owners directly with tourists, eliminating intermediaries and empowering local businesses to thrive.
             </i>
           </h6>
         </div>
@@ -90,18 +87,7 @@ const Home = ({
             textAlign: "center",
           }}
         >
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum nulla
-          numquam sunt. Aliquam quam voluptatem enim ex expedita quaerat quis
-          est id unde autem asperiores ratione, nulla eos itaque perspiciatis.
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum nulla
-          numquam sunt. Aliquam quam voluptatem enim ex expedita quaerat quis
-          est id unde autem asperiores ratione, nulla eos itaque perspiciatis.
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum nulla
-          numquam sunt. Aliquam quam voluptatem enim ex expedita quaerat quis
-          est id unde autem asperiores ratione, nulla eos itaque perspiciatis.
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum nulla
-          numquam sunt. Aliquam quam voluptatem enim ex expedita quaerat quis
-          est id unde autem asperiores ratione, nulla eos itaque perspiciatis.
+          Our web application provides a comprehensive solution that maximizes marketing opportunities for local businesses, improves operational efficiency through valuable feedback, and fosters collaboration and growth within the industry. By removing barriers and promoting direct connections, we aim to bring the experience of tourism to new heights and contribute to the economic development of the entire state. we strive to make SA Tourism Booster the go-to platform for both business owners and tourists. Join us in shaping the future of the local tourism industry and embark on an unforgettable journey through the bounds of infinity.
         </p>
       </section>
       <section className="container pl-5 pt-5 pr-5">

@@ -50,10 +50,7 @@ const Contact = ({ addContact, setAlert }) => {
           <h1 className="text-light">Contact Us</h1>
           <h6 className="text-light pt-3">
             <i>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-              saepe sapiente architecto, et blanditiis aut facere repudiandae
-              esse! Illo ex voluptates laborum magnam voluptatibus libero autem.
-              Vitae, enim placeat. Molestias.
+                Thank you for your interest in SA Tourism Booster. We are excited to hear from you and assist you with any questions, feedback, or inquiries you may have. Please don't hesitate to reach out to us using the following contact details:
             </i>
           </h6>
         </div>
@@ -71,10 +68,7 @@ const Contact = ({ addContact, setAlert }) => {
             <div className="col-md-6">
               <h1 className="text-dark pt-5">Contact Us</h1>
               <p className="text-dark pt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-                saepe sapiente architecto, et blanditiis aut facere repudiandae
-                esse! Illo ex voluptates laborum magnam voluptatibus libero
-                autem. Vitae, enim placeat. Molestias.
+                We are available during business hours to assist you with any questions or concerns you may have. Whether you are a business owner looking to join our platform or a tourist seeking information, we are here to help. Don't hesitate to get in touch with us and let us know how we can serve you better.
               </p>
               <div className="row">
                 <div className="col-md-6">
@@ -82,10 +76,11 @@ const Contact = ({ addContact, setAlert }) => {
                     <i className="fas fa-map-marker-alt"></i> Address
                   </h6>
                   <p className="text-dark pt-3">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Atque saepe sapiente architecto, et blanditiis aut facere
-                    repudiandae esse! Illo ex voluptates laborum magnam
-                    voluptatibus libero autem. Vitae, enim placeat. Molestias.
+                      SA Tourism Booster
+                      123 Main Street
+                      Adelaide, South Australia
+                      Australia
+                      Postal Code: 5000
                   </p>
                 </div>
                 <div className="col-md-6">
@@ -93,10 +88,9 @@ const Contact = ({ addContact, setAlert }) => {
                     <i className="fas fa-phone-alt"></i> Phone
                   </h6>
                   <p className="text-dark pt-3">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Atque saepe sapiente architecto, et blanditiis aut facere
-                    repudiandae esse! Illo ex voluptates laborum magnam
-                    voluptatibus libero autem. Vitae, enim placeat. Molestias.
+                      Email: arshchawla450@gmail.com
+                      <br></br>
+                      Phone: +1-555-123-4567
                   </p>
                 </div>
               </div>
