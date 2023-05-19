@@ -37,7 +37,7 @@ import Tourists from "./pages/Tourists";
 import MyProfile from "./pages/MyProfile";
 import History from "./pages/History";
 
-export const HOST = "http://localhost:5000";
+export const HOST = "";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
