@@ -12,12 +12,21 @@ const app = express();
 const port = process.env.PORT || 5000;
 const nodemailer = require("nodemailer");
 
+const path = require("path");
+
 const config = require("config");
 
 connectDB();
 
 let env = process.env.NODE_ENV || "development";
 console.log(env);
+
+// if (
+//   process.env.NODE_ENV === "production" ||
+//   process.env.NODE_ENV === "staging"
+// ) {
+
+// }
 
 const URL =
   env === "production"
@@ -198,6 +207,10 @@ app.post(
     }
   }
 );
+app.use(express.static("client/build"));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+});
 
 app.listen(port, () => {
   console.log(`App listening at ${port}`);
