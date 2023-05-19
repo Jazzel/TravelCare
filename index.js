@@ -12,6 +12,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 const nodemailer = require("nodemailer");
 
+const path = require("path");
+
 const config = require("config");
 
 connectDB();
