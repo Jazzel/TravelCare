@@ -78,7 +78,7 @@ const Contact = ({ addContact, setAlert }) => {
                   <p className="text-dark pt-3">
                       SA Tourism Booster
                       123 Main Street
-                      Adelaide, South Australia
+                      Adelaide, South Australiagit 
                       Australia
                       Postal Code: 5000
                   </p>
