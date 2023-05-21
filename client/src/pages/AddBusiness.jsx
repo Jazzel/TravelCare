@@ -106,7 +106,7 @@ const AddBusiness = ({
           <div class="form-group w-50 mt-4">
             <label for="">Google Map Link:</label>
             <input
-              type="number"
+              type="text"
               class="form-control"
               aria-describedby="helpId"
               placeholder=""

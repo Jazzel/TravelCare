@@ -63,7 +63,6 @@ const Dashboard = ({
                   <th>Username</th>
                   <th>Role</th>
                   <th>Status</th>
-                  <th>Discount</th>
                   <th>Actions</th>
                 </tr>
               </thead>

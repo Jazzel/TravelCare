@@ -27,21 +27,20 @@ const DashboardHeader = ({ auth: { user, role }, logout }) => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              {role === "business" ||
-                (role === "admin" && (
-                  <>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/discounts">
-                        Discounts
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/tourists">
-                        Tourists
-                      </Link>
-                    </li>
-                  </>
-                ))}
+              {(role === "business" || role === "admin") && (
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/discounts">
+                      Discounts
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/tourists">
+                      Tourists
+                    </Link>
+                  </li>
+                </>
+              )}
               <li className="nav-item">
                 <Link className="nav-link" aria-current="page" to="/">
                   Go back to site
